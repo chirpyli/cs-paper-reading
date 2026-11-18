@@ -4,12 +4,6 @@
 
 ## 站点地址
 
-项目站点的固定格式为：
-
-```
-https://<用户名>.github.io/<仓库名>/
-```
-
 本仓库对应：
 
 ```
@@ -23,13 +17,13 @@ https://chirpyli.github.io/cs-paper-reading/
 <!-- PAPERS START -->
 | 年份 | 论文 | 推荐程度 |
 | --- | --- | --- |
-| 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★ |
-| 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | ★★ |
-| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ★★ |
-| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | ★★★ |
+| 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
+| 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | ★★★★★ |
+| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ★★★★★ |
+| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | ★★★★★ |
 | 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-2017/) | ★★★★★ |
 | 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-analysis/) | ★★★☆☆ |
-| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates-2019/) | ★★★☆ |
+| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates-2019/) | ★★★★☆ |
 | 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute-2026/) | ★★★★☆ |
 | 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase-2026/) | ★★★★★ |
 | 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability-2026/) | ★★★★☆ |
