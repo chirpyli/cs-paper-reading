@@ -26,6 +26,7 @@ tags:
 topic: cloud-native
 difficulty: advanced
 featured: true
+rating: 5
 ---
 
 **DOI:** [http://dx.doi.org/10.1145/3035918.3056101](http://dx.doi.org/10.1145/3035918.3056101)

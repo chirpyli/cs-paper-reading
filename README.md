@@ -21,18 +21,18 @@ https://chirpyli.github.io/cs-paper-reading/
 列表由构建脚本根据 `papers/zh/*.md` 自动生成。
 
 <!-- PAPERS START -->
-| 年份 | 论文 | 发表 / 来源 |
+| 年份 | 论文 | 推荐程度 |
 | --- | --- | --- |
-| 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | Communications of the ACM |
-| 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | Proceedings of the 1974 ACM SIGFIDET Workshop |
-| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ACM Transactions on Database Systems, Vol. 1, No. 2 |
-| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | SIGMOD 2016 |
-| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-2017/) | SIGMOD 2017 |
-| 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-analysis/) | 阅读札记 |
-| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates-2019/) | SIGMOD 2019 |
-| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute-2026/) | arXiv:2609.22978 [cs.DC] |
-| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase-2026/) | PVLDB, Vol. 19, No. 12, pp. 4385-4398 |
-| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability-2026/) | arXiv:2608.25512 [cs.PL] |
+| 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★ |
+| 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | ★★ |
+| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ★★ |
+| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | ★★★ |
+| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-2017/) | ★★★★★ |
+| 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-analysis/) | ★★★☆☆ |
+| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates-2019/) | ★★★☆ |
+| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute-2026/) | ★★★★☆ |
+| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase-2026/) | ★★★★★ |
+| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability-2026/) | ★★★★☆ |
 <!-- PAPERS END -->
 
 ## 目录结构
@@ -101,9 +101,12 @@ https://chirpyli.github.io/cs-paper-reading/
    topic: systems
    difficulty: intermediate
    featured: false
+   rating: 4      # 1-5 星，控制 README 论文列表中的推荐程度
    draft: false   # true 时不会生成页面，适合写作中
    ---
    ```
+
+`rating` 取值 1–5，会显示为 README 论文列表中的推荐星级。
 
 3. 提交并推送：
 

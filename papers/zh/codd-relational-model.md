@@ -15,6 +15,7 @@ tags:
 topic: classic
 difficulty: introductory
 featured: true
+rating: 5
 ---
 
 ## TL;DR

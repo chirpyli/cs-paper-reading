@@ -30,6 +30,7 @@ tags:
 topic: storage
 difficulty: intermediate
 featured: true
+rating: 5
 draft: false
 ---
 

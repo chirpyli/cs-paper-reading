@@ -20,6 +20,7 @@ tags:
 topic: programming-languages
 difficulty: advanced
 featured: true
+rating: 4
 ---
 
 > arXiv:2608.25512 [cs.PL] · 该论文英文全文 Markdown 版的完整中文译本；公式、图片、表格、算法与参考文献条目均按原文保留。

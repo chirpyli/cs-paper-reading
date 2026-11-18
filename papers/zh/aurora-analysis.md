@@ -16,6 +16,7 @@ tags:
 topic: cloud-native
 difficulty: advanced
 featured: false
+rating: 3
 ---
 
 ## 云原生数据库核心点

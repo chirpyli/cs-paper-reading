@@ -17,6 +17,7 @@ tags:
 topic: optional
 difficulty: introductory
 featured: true
+rating: 5
 ---
 
 ## TL;DR

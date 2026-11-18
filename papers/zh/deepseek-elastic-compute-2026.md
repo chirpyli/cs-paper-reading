@@ -21,6 +21,7 @@ tags:
 topic: systems
 difficulty: advanced
 featured: true
+rating: 4
 ---
 
 ---

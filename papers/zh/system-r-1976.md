@@ -30,6 +30,7 @@ tags:
 topic: classic
 difficulty: advanced
 featured: true
+rating: 5
 ---
 
 ## TL;DR
