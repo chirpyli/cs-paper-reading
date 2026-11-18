@@ -17,6 +17,8 @@ import markdown
 import yaml
 from markdown.extensions import Extension
 from markdown.inlinepatterns import InlineProcessor
+from markdown.postprocessors import Postprocessor
+from markdown.preprocessors import Preprocessor
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_DIR = ROOT / "papers" / "zh"
@@ -24,7 +26,9 @@ ASSET_SOURCE_DIR = ROOT / "papers" / "assets"
 OUTPUT_DIR = ROOT / "docs" / "papers" / "zh"
 ASSET_OUTPUT_DIR = ROOT / "docs" / "papers"
 HOME_PAGE = ROOT / "docs" / "index.html"
+README_PAGE = ROOT / "README.md"
 SOURCE_SITE = "https://peekdb.dev"
+SITE_URL = "https://chirpyli.github.io/cs-paper-reading"
 PREFIX = "../../../"
 MARKERS = ("<!-- PAPERS START -->", "<!-- PAPERS END -->")
 MARK_COLOR_PATTERN = "red|blue|green|orange|purple|gray"
@@ -60,10 +64,38 @@ class StrikeInlineProcessor(InlineProcessor):
         return el, m.start(0), m.end(0)
 
 
+class MathPlaceholderPreprocessor(Preprocessor):
+    """Hide TeX from Markdown inline rules before MathJax sees it."""
+
+    def run(self, lines):
+        text = "\n".join(lines)
+
+        def store(match: re.Match[str]) -> str:
+            token = f"MATHJAXTOKEN{len(self.md.math_tokens)}END"
+            self.md.math_tokens.append((token, match.group(0)))
+            return token
+
+        text = re.sub(r"(?<!\\)\$\$.+?(?<!\\)\$\$", store, text, flags=re.S)
+        text = re.sub(r"(?<!\\)\$(?!\$)([^$\n]+)(?<!\\)\$", store, text)
+        return text.split("\n")
+
+
+class MathPlaceholderPostprocessor(Postprocessor):
+    """Restore TeX verbatim after Markdown conversion."""
+
+    def run(self, text: str) -> str:
+        for token, math in self.md.math_tokens:
+            text = text.replace(token, math)
+        return text
+
+
 class PaperMarkdownExtension(Extension):
     """Obsidian-like inline annotations for paper notes."""
 
     def extendMarkdown(self, md):
+        md.math_tokens = []
+        md.preprocessors.register(MathPlaceholderPreprocessor(md), "math-placeholder-pre", 100)
+        md.postprocessors.register(MathPlaceholderPostprocessor(md), "math-placeholder-post", 0)
         md.inlinePatterns.register(
             MarkInlineProcessor(
                 r"==(?:(?P<color>" + MARK_COLOR_PATTERN + r"):)?(?P<text>[^=\n]+)==",
@@ -270,6 +302,32 @@ def update_home(papers: list[dict]) -> None:
     HOME_PAGE.write_text(updated, encoding="utf-8")
 
 
+def update_readme(papers: list[dict]) -> None:
+    text = README_PAGE.read_text(encoding="utf-8")
+    start, end = MARKERS
+    if start not in text or end not in text:
+        raise ValueError(f"{README_PAGE}: missing paper-list markers")
+
+    def cell(value: object) -> str:
+        return str(value).replace("|", "\\|")
+
+    lines = ["| 年份 | 论文 | 发表 / 来源 |", "| --- | --- | --- |"]
+    for paper in papers:
+        url = f"{SITE_URL}/papers/zh/{paper['slug']}/"
+        lines.append(
+            f"| {cell(paper.get('year', ''))} | "
+            f"[{cell(paper['title'])}]({url}) | {cell(paper.get('venue', ''))} |"
+        )
+    block = start + "\n" + "\n".join(lines) + "\n" + end
+    updated = re.sub(
+        re.escape(start) + r".*?" + re.escape(end),
+        lambda _: block,
+        text,
+        flags=re.S,
+    )
+    README_PAGE.write_text(updated, encoding="utf-8")
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     (ROOT / "docs" / ".nojekyll").touch()
@@ -288,6 +346,7 @@ def main() -> None:
 
     papers.sort(key=lambda p: (int(p.get("year", 0)), p["slug"]))
     update_home(papers)
+    update_readme(papers)
     print(f"Generated {len(papers)} paper pages in {OUTPUT_DIR}")
 
 

@@ -10,3 +10,4 @@ venv/
 .codebuddy/
 *.swp
 dbnotes
+todo/
