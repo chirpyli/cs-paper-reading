@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CS Paper Reading">
+  <rect width="64" height="64" rx="14" fill="#1f6f5c"/>
+  <path d="M10 17c7-3 14-3 22 2v31c-8-5-15-5-22-2z" fill="#f7f7f5"/>
+  <path d="M54 17c-7-3-14-3-22 2v31c8-5 15-5 22-2z" fill="#eef2ef"/>
+  <path d="M32 19v31" fill="none" stroke="#1f6f5c" stroke-width="2"/>
+  <g fill="none" stroke="#1f6f5c" stroke-width="2" stroke-linecap="round" opacity=".55">
+    <path d="M16 25h10M16 31h9M39 25h9M39 31h9"/>
+  </g>
+  <g fill="#d9a400">
+    <rect x="16" y="37" width="10" height="3" rx="1.5"/>
+    <rect x="38" y="37" width="10" height="3" rx="1.5"/>
+  </g>
+</svg>

@@ -38,6 +38,7 @@ https://chirpyli.github.io/cs-paper-reading/
 ├── docs/                     # 构建产物 + 站点静态资源
 │   ├── index.html            # 首页，论文列表由构建脚本自动同步
 │   ├── assets/style.css      # 全站样式（含高亮/下划线样式）
+│   ├── assets/favicon.svg    # 站点图标
 │   ├── papers/
 │   │   ├── zh/<slug>/index.html  # 生成的论文页面
 │   │   ├── lakebase/             # 论文配图

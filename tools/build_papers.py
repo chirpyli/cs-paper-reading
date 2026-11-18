@@ -123,6 +123,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="%%DESCRIPTION%%">
   <title>%%TITLE%% · CS Paper Reading</title>
+  <link rel="icon" type="image/svg+xml" href="%%PREFIX%%assets/favicon.svg">
   <link rel="stylesheet" href="%%PREFIX%%assets/style.css">
   <script>
     window.MathJax = {
