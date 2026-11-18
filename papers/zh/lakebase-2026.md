@@ -134,7 +134,7 @@ OLTP 数据库还必须高可用且高性能，通常要在几毫秒内应答查
 
 计算节点运行 PostgreSQL，并配有实现 PostgreSQL SMGR API 的定制存储管理器，它负责与 Pageserver 通信并更新本地 SSD 缓存。一次 SMGR 读由本地缓存服务，未命中时从 Pageserver 获取并缓存。一次 SMGR 写只更新本地缓存，因为 PostgreSQL 恢复时只需要已持久化的 WAL。
 
-计算节点还运行一个 WAL proposer，它持续把 WAL 记录广播给所有 Safekeeper，并在某次写入在多数派上持久后推进。
+==计算节点还运行一个 WAL proposer，它持续把 WAL 记录广播给所有 Safekeeper，并在某次写入在多数派上持久后推进。==
 
 主库启动时向 Pageserver 请求 basebackup（启动所需的元数据文件），从而避免做检查点；恢复点是 Pageserver 已摄入的最后一条 WAL 记录，而不是最后一个检查点。
 
@@ -154,13 +154,13 @@ OLTP 数据库还必须高可用且高性能，通常要在几毫秒内应答查
 
 Safekeeper（SK）维护一组彼此隔离的时间线，每条时间线存放 WAL 段。它把最近的 WAL 保存在本地磁盘上，并主动把已获多数派提交的段上传到对象存储。SK 时间线接受来自 PostgreSQL 主库的写入，并把 WAL 流式发送给副本与 Pageserver。
 
-一条时间线使用类 Raft [37] 协议在 SK 之间复制 WAL：PostgreSQL 主库是 WAL proposer，SK 是 acceptor。一条 WAL 记录在多数派写入磁盘后即为持久，系统会把 WAL 从最领先的 SK 副本推送到落后的副本以保证冗余。
+一条时间线使用类 Raft [37] 协议在 SK 之间复制 WAL：==PostgreSQL 主库是 WAL proposer，SK 是 acceptor。一条 WAL 记录在多数派写入磁盘后即为持久，系统会把 WAL 从最领先的 SK 副本推送到落后的副本以保证冗余。==
 
 为防止脑裂（即多个计算都声称自己是写入者），PostgreSQL 计算必须先选举自己为 leader 才能写入，而 SK 多数派只确认一个 leader。SK 维护一个单调递增的 term 号。新的计算主库会递增 term 并向 SK 多数派提议自己。SK 只接受它们见过的最高 term。一条 WAL 记录只有在多数派 SK 在当前 term 下将其落盘后才会被确认。一旦计算检测到 term 变化，它必须重新选举自己为 leader。
 
 #### 3.5.2 Pageserver。
 
-Pageserver（PS）从 SK 拉取 WAL 流，维护租户及其时间线，并向计算暴露两个 API：GetPage@LSN 与 GetBaseBackup。每条时间线持续从 SK 读取 WAL 并物化页面，把增量 WAL 记录与已物化的整页镜像组织成类 LSM 树的结构。
+==Pageserver（PS）从 SK 拉取 WAL 流，维护租户及其时间线，并向计算暴露两个 API：GetPage@LSN 与 GetBaseBackup。每条时间线持续从 SK 读取 WAL 并物化页面，把增量 WAL 记录与已物化的整页镜像组织成类 LSM 树的结构。==
 
 在一次 GetPage@LSN 调用中，PS 找到更早 LSN 上最近的一整页镜像，把增量 WAL 记录回放到请求的 LSN 上，然后返回该页。该请求会阻塞，直到 PS 已摄入到该 LSN 的 WAL。
 
@@ -180,15 +180,15 @@ SC 通过周期性存活探测监控 SK 与 PS 的健康状况。SK 故障时，
 
 ### 4.1 数据库日志（WAL）与 LSN
 
-WAL 存储对性能、持久性与正确性都至关重要。计算主库生成 WAL 字节流，经 Safekeeper（SK）持久地存入对象存储。Pageserver（PS）从 SK 接收 WAL 记录并重放它们，以在特定 LSN 上物化页面镜像，并按请求返回给计算。计算、SK 与 PS 各自跟踪多种 LSN（WAL 流中的字节偏移），以提供持久性、事务一致性与快速崩溃恢复。
+WAL 存储对性能、持久性与正确性都至关重要。计算主库生成 WAL 字节流，经 Safekeeper（SK）持久地存入对象存储。==Pageserver（PS）从 SK 接收 WAL 记录并重放它们，以在特定 LSN 上物化页面镜像，并按请求返回给计算。== 计算、SK 与 PS 各自跟踪多种 LSN（WAL 流中的字节偏移），以提供持久性、事务一致性与快速崩溃恢复。
 
 ![图 4：各组件维护的 WAL 与 LSN。](../assets/lakebase/fig-4.png)
 
 *图 4：各组件维护的 WAL 与 LSN。*
 
-如图 4 所示，计算主库跟踪当前 LSN（1）与提交 LSN（2）。它把 WAL 追加到当前 LSN，把每条记录复制到所有 SK，并在记录于多数派上持久后推进提交 LSN；崩溃恢复时它恢复到提交 LSN 为止的数据。
+如图 4 所示，==计算主库跟踪当前 LSN（1）与提交 LSN（2）。它把 WAL 追加到当前 LSN，把每条记录复制到所有 SK，并在记录于多数派上持久后推进提交 LSN；崩溃恢复时它恢复到提交 LSN 为止的数据。==
 
-计算副本跟踪其最后回放 LSN（3），低于该值的数据对其可见。它从 SK 拉取 WAL 流并回放记录以更新本地缓存，每回放一条就推进最后回放 LSN。静态副本则固定在某个特定 LSN（4）上，只读到该位置。
+==计算副本跟踪其最后回放 LSN（3），低于该值的数据对其可见。它从 SK 拉取 WAL 流并回放记录以更新本地缓存，每回放一条就推进最后回放 LSN。== 静态副本则固定在某个特定 LSN（4）上，只读到该位置。
 
 SK 维护 flush、commit 与 backup 三种 LSN。它持续把收到的 WAL 落盘，推进 flush LSN（5）；主库把其提交 LSN（6）通知所有 SK，SK 只把低于该值的数据流式发给 Pageserver。为保证持久性，SK 把提交 LSN 之前的所有 WAL 段上传到对象存储，由 backup LSN（7）跟踪，并删除低于该值的本地磁盘段。
 
@@ -198,7 +198,7 @@ PS 把来自 SK 的 WAL 摄入一种优化过的存储格式（4.3 节），在�
 
 Lakebase 的分支以 O(1) 时间分叉数据库，不做任何昂贵的物理数据复制。当数据库历史被分叉时，会创建一条新分支，原历史成为父分支。父分支与子分支共享到分支 LSN（11）为止的历史（以及同一份物理存储），此后各自分叉。分支 LSN 的选择必须保证：在创建分支的那一刻，父分支在该 LSN 上的每一页都能被重建。为简单起见，我们把分支 LSN 的选择限制在父分支 PITR 窗口内的 LSN。如图 4 所示，子分支创建后，其新的历史/WAL 记录与父分支的记录独立存放。任何在分支 LSN 上尚未提交的事务，其处理方式与崩溃恢复中的在途事务完全相同：它们会被中止，未完成的数据修改在子分支上不可见。
 
-子分支刚创建时，只包含对父分支时间线 ID 与分支 LSN 的引用。子分支上的 GetPage 请求会递归进入父分支，以获取子分支上不直接可用的历史或页面数据。子分支被建模为 Lakebase 存储中的一条新时间线。因此，压缩与垃圾回收等时间线级操作在子分支与父分支上基本独立进行。
+==子分支刚创建时，只包含对父分支时间线 ID 与分支 LSN 的引用。== 子分支上的 GetPage 请求会递归进入父分支，以获取子分支上不直接可用的历史或页面数据。子分支被建模为 Lakebase 存储中的一条新时间线。因此，压缩与垃圾回收等时间线级操作在子分支与父分支上基本独立进行。
 
 Lakebase 支持把子分支从父分支上分离（detach）。分离分支是瞬时完成的，属于元数据操作。PS 跟踪祖先关系，并异步把祖先的数据复制到被分离的分支上。被分离的分支可以重新挂接到其某个祖先之下。Lakebase 目前不支持合并两条分支。调和分叉后的物理数据缺乏良好定义，且通常需要应用层来解决冲突。
 
@@ -240,7 +240,7 @@ OLTP 应用要求快速读取。图 6 展示了 Lakebase 的读路径。原始 P
 
 缓存命中会立即返回页面（1）；未命中则向 Pageserver 发出 GetPage@LSN（3）。为了一致读，请求必须携带正确的 LSN。在当前 LSN 上发起 GetPage 会很慢，因为 Pageserver 必须阻塞等待自己摄入到该 LSN——毕竟该页可能在其 last record LSN 与当前 LSN 之间发生了变化。为避免这一点，请求携带两个 LSN：请求 LSN 指定要获取的页面版本，not-modified-since LSN 则承诺该页在它与请求 LSN 之间没有变化，于是 Pageserver 只需摄入到 not-modified-since LSN 即可。
 
-计算节点维护一个定长的 last-written-LSN 缓存（LwLSN），把每个页面映射到其 not-modified-since LSN（2），并在脏页被逐出时更新为该页的 LSN。GetPage 在命中时使用 LwLSN 条目，未命中时使用全局 last-written LSN。
+==计算节点维护一个定长的 last-written-LSN 缓存（LwLSN），把每个页面映射到其 not-modified-since LSN（2），并在脏页被逐出时更新为该页的 LSN。GetPage 在命中时使用 LwLSN 条目，未命中时使用全局 last-written LSN。==
 
 发生 LFC 未命中时，PS 按 4.3 节所述处理 GetPage@LSN，期间可能从远端存储获取层文件（4 与 5）。计算节点把返回的页面镜像写入其 LFC 并更新 LwLSN 缓存。预取读走的是同一条路径。
 

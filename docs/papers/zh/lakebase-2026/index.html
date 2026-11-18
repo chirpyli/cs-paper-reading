@@ -22,7 +22,7 @@
         <a href="../../../#papers">论文笔记</a>
         <a href="../../../#repos">相关仓库</a>
         <a href="../../../#about">关于</a>
-        <a class="header-github" href="https://github.com/chirpyli" target="_blank" rel="noopener noreferrer" aria-label="chirpyli on GitHub">
+        <a class="header-github" href="https://github.com/chirpyli/cs-paper-reading" target="_blank" rel="noopener noreferrer" aria-label="cs-paper-reading on GitHub">
           <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
           </svg>
@@ -149,7 +149,7 @@
 <h3 id="33-postgresql">3.3 PostgreSQL 计算</h3>
 <p>一个 Lakebase 实例有一个 PostgreSQL 主库以及可选的只读副本。主库把数据复制到 3 个 Safekeeper，并初始分配一个 Pageserver；随着数据库增长，其数据会分片到更多 Pageserver。</p>
 <p>计算节点运行 PostgreSQL，并配有实现 PostgreSQL SMGR API 的定制存储管理器，它负责与 Pageserver 通信并更新本地 SSD 缓存。一次 SMGR 读由本地缓存服务，未命中时从 Pageserver 获取并缓存。一次 SMGR 写只更新本地缓存，因为 PostgreSQL 恢复时只需要已持久化的 WAL。</p>
-<p>计算节点还运行一个 WAL proposer，它持续把 WAL 记录广播给所有 Safekeeper，并在某次写入在多数派上持久后推进。</p>
+<p><mark>计算节点还运行一个 WAL proposer，它持续把 WAL 记录广播给所有 Safekeeper，并在某次写入在多数派上持久后推进。</mark></p>
 <p>主库启动时向 Pageserver 请求 basebackup（启动所需的元数据文件），从而避免做检查点；恢复点是 Pageserver 已摄入的最后一条 WAL 记录，而不是最后一个检查点。</p>
 <p>读性能通过增加只读副本横向扩展，副本共享主库的 Safekeeper，并持续流式接收 WAL 以更新本地缓存。Lakebase 还支持固定在给定 LSN 上的静态（只读）副本，用于时间旅行查询。</p>
 <h3 id="34-postgresql">3.4 非 PostgreSQL 计算</h3>
@@ -159,10 +159,10 @@
 <p>存储控制器为每个项目创建一个存储租户（storage tenant），内含多条时间线（timeline）；每个计算属于一个租户与一条时间线。项目从一条根时间线开始，分支或按时间点恢复（PITR）会在同一租户下创建一条新时间线。同一租户的各条时间线共置于相同的 Pageserver 上，使分支能高效读取其写时复制祖先的数据，但它们可能复制到不同的 Safekeeper 上。</p>
 <h4 id="351-safekeeper">3.5.1 Safekeeper。</h4>
 <p>Safekeeper（SK）维护一组彼此隔离的时间线，每条时间线存放 WAL 段。它把最近的 WAL 保存在本地磁盘上，并主动把已获多数派提交的段上传到对象存储。SK 时间线接受来自 PostgreSQL 主库的写入，并把 WAL 流式发送给副本与 Pageserver。</p>
-<p>一条时间线使用类 Raft [37] 协议在 SK 之间复制 WAL：PostgreSQL 主库是 WAL proposer，SK 是 acceptor。一条 WAL 记录在多数派写入磁盘后即为持久，系统会把 WAL 从最领先的 SK 副本推送到落后的副本以保证冗余。</p>
+<p>一条时间线使用类 Raft [37] 协议在 SK 之间复制 WAL：<mark>PostgreSQL 主库是 WAL proposer，SK 是 acceptor。一条 WAL 记录在多数派写入磁盘后即为持久，系统会把 WAL 从最领先的 SK 副本推送到落后的副本以保证冗余。</mark></p>
 <p>为防止脑裂（即多个计算都声称自己是写入者），PostgreSQL 计算必须先选举自己为 leader 才能写入，而 SK 多数派只确认一个 leader。SK 维护一个单调递增的 term 号。新的计算主库会递增 term 并向 SK 多数派提议自己。SK 只接受它们见过的最高 term。一条 WAL 记录只有在多数派 SK 在当前 term 下将其落盘后才会被确认。一旦计算检测到 term 变化，它必须重新选举自己为 leader。</p>
 <h4 id="352-pageserver">3.5.2 Pageserver。</h4>
-<p>Pageserver（PS）从 SK 拉取 WAL 流，维护租户及其时间线，并向计算暴露两个 API：GetPage@LSN 与 GetBaseBackup。每条时间线持续从 SK 读取 WAL 并物化页面，把增量 WAL 记录与已物化的整页镜像组织成类 LSM 树的结构。</p>
+<p><mark>Pageserver（PS）从 SK 拉取 WAL 流，维护租户及其时间线，并向计算暴露两个 API：GetPage@LSN 与 GetBaseBackup。每条时间线持续从 SK 读取 WAL 并物化页面，把增量 WAL 记录与已物化的整页镜像组织成类 LSM 树的结构。</mark></p>
 <p>在一次 GetPage@LSN 调用中，PS 找到更早 LSN 上最近的一整页镜像，把增量 WAL 记录回放到请求的 LSN 上，然后返回该页。该请求会阻塞，直到 PS 已摄入到该 LSN 的 WAL。</p>
 <p>PS 会把树与元数据的快照上传到对象存储以支持快速崩溃恢复。每条时间线保留一个热备（hot standby），它会下载快照与热层文件，因此当主库故障时能迅速接管，并从已缓存的层中服务 GetPage 请求。</p>
 <h4 id="353">3.5.3 存储控制器。</h4>
@@ -172,16 +172,16 @@
 <h2 id="4">4 存储与计算分离</h2>
 <p>本节详述 Lakebase 存算分离背后的机制：数据如何被持久化、版本化，以及如何跨系统各组件被服务。</p>
 <h3 id="41-wal-lsn">4.1 数据库日志（WAL）与 LSN</h3>
-<p>WAL 存储对性能、持久性与正确性都至关重要。计算主库生成 WAL 字节流，经 Safekeeper（SK）持久地存入对象存储。Pageserver（PS）从 SK 接收 WAL 记录并重放它们，以在特定 LSN 上物化页面镜像，并按请求返回给计算。计算、SK 与 PS 各自跟踪多种 LSN（WAL 流中的字节偏移），以提供持久性、事务一致性与快速崩溃恢复。</p>
+<p>WAL 存储对性能、持久性与正确性都至关重要。计算主库生成 WAL 字节流，经 Safekeeper（SK）持久地存入对象存储。<mark>Pageserver（PS）从 SK 接收 WAL 记录并重放它们，以在特定 LSN 上物化页面镜像，并按请求返回给计算。</mark> 计算、SK 与 PS 各自跟踪多种 LSN（WAL 流中的字节偏移），以提供持久性、事务一致性与快速崩溃恢复。</p>
 <p><img alt="图 4：各组件维护的 WAL 与 LSN。" src="../../lakebase/fig-4.png" /></p>
 <p><em>图 4：各组件维护的 WAL 与 LSN。</em></p>
-<p>如图 4 所示，计算主库跟踪当前 LSN（1）与提交 LSN（2）。它把 WAL 追加到当前 LSN，把每条记录复制到所有 SK，并在记录于多数派上持久后推进提交 LSN；崩溃恢复时它恢复到提交 LSN 为止的数据。</p>
-<p>计算副本跟踪其最后回放 LSN（3），低于该值的数据对其可见。它从 SK 拉取 WAL 流并回放记录以更新本地缓存，每回放一条就推进最后回放 LSN。静态副本则固定在某个特定 LSN（4）上，只读到该位置。</p>
+<p>如图 4 所示，<mark>计算主库跟踪当前 LSN（1）与提交 LSN（2）。它把 WAL 追加到当前 LSN，把每条记录复制到所有 SK，并在记录于多数派上持久后推进提交 LSN；崩溃恢复时它恢复到提交 LSN 为止的数据。</mark></p>
+<p><mark>计算副本跟踪其最后回放 LSN（3），低于该值的数据对其可见。它从 SK 拉取 WAL 流并回放记录以更新本地缓存，每回放一条就推进最后回放 LSN。</mark> 静态副本则固定在某个特定 LSN（4）上，只读到该位置。</p>
 <p>SK 维护 flush、commit 与 backup 三种 LSN。它持续把收到的 WAL 落盘，推进 flush LSN（5）；主库把其提交 LSN（6）通知所有 SK，SK 只把低于该值的数据流式发给 Pageserver。为保证持久性，SK 把提交 LSN 之前的所有 WAL 段上传到对象存储，由 backup LSN（7）跟踪，并删除低于该值的本地磁盘段。</p>
 <p>PS 把来自 SK 的 WAL 摄入一种优化过的存储格式（4.3 节），在摄入速度与高效 GetPage 请求之间取得平衡。它在内存摄入时推进 last record LSN（8），随后批量把记录落盘，推进 flush LSN（9）（崩溃时即从该位置重新水合）。它还会把已落盘文件上传到远端存储，推进 remote consistent LSN（10）；若本地不存在有效的 flush LSN（例如磁盘故障或首次提供服务），则从该位置恢复。</p>
 <h3 id="42">4.2 分支</h3>
 <p>Lakebase 的分支以 O(1) 时间分叉数据库，不做任何昂贵的物理数据复制。当数据库历史被分叉时，会创建一条新分支，原历史成为父分支。父分支与子分支共享到分支 LSN（11）为止的历史（以及同一份物理存储），此后各自分叉。分支 LSN 的选择必须保证：在创建分支的那一刻，父分支在该 LSN 上的每一页都能被重建。为简单起见，我们把分支 LSN 的选择限制在父分支 PITR 窗口内的 LSN。如图 4 所示，子分支创建后，其新的历史/WAL 记录与父分支的记录独立存放。任何在分支 LSN 上尚未提交的事务，其处理方式与崩溃恢复中的在途事务完全相同：它们会被中止，未完成的数据修改在子分支上不可见。</p>
-<p>子分支刚创建时，只包含对父分支时间线 ID 与分支 LSN 的引用。子分支上的 GetPage 请求会递归进入父分支，以获取子分支上不直接可用的历史或页面数据。子分支被建模为 Lakebase 存储中的一条新时间线。因此，压缩与垃圾回收等时间线级操作在子分支与父分支上基本独立进行。</p>
+<p><mark>子分支刚创建时，只包含对父分支时间线 ID 与分支 LSN 的引用。</mark> 子分支上的 GetPage 请求会递归进入父分支，以获取子分支上不直接可用的历史或页面数据。子分支被建模为 Lakebase 存储中的一条新时间线。因此，压缩与垃圾回收等时间线级操作在子分支与父分支上基本独立进行。</p>
 <p>Lakebase 支持把子分支从父分支上分离（detach）。分离分支是瞬时完成的，属于元数据操作。PS 跟踪祖先关系，并异步把祖先的数据复制到被分离的分支上。被分离的分支可以重新挂接到其某个祖先之下。Lakebase 目前不支持合并两条分支。调和分叉后的物理数据缺乏良好定义，且通常需要应用层来解决冲突。</p>
 <h3 id="43-pageserver">4.3 Pageserver 存储格式</h3>
 <p>所有持久化数据都以标准 PostgreSQL 页格式存放在云对象存储上，任何消费 PostgreSQL 页面的引擎无需 Lakebase 计算层即可读取。PS 从 SK 摄入 WAL 记录，并把它们物化为一种受 LSM 树启发的结构，从而在维持高 WAL 摄入速率的同时支持高效的页级访问以服务 GetPage 请求。</p>
@@ -202,7 +202,7 @@
 <p><img alt="图 6：读路径 GetPage@LSN。" src="../../lakebase/fig-6.png" /></p>
 <p><em>图 6：读路径 GetPage@LSN。</em></p>
 <p>缓存命中会立即返回页面（1）；未命中则向 Pageserver 发出 GetPage@LSN（3）。为了一致读，请求必须携带正确的 LSN。在当前 LSN 上发起 GetPage 会很慢，因为 Pageserver 必须阻塞等待自己摄入到该 LSN——毕竟该页可能在其 last record LSN 与当前 LSN 之间发生了变化。为避免这一点，请求携带两个 LSN：请求 LSN 指定要获取的页面版本，not-modified-since LSN 则承诺该页在它与请求 LSN 之间没有变化，于是 Pageserver 只需摄入到 not-modified-since LSN 即可。</p>
-<p>计算节点维护一个定长的 last-written-LSN 缓存（LwLSN），把每个页面映射到其 not-modified-since LSN（2），并在脏页被逐出时更新为该页的 LSN。GetPage 在命中时使用 LwLSN 条目，未命中时使用全局 last-written LSN。</p>
+<p><mark>计算节点维护一个定长的 last-written-LSN 缓存（LwLSN），把每个页面映射到其 not-modified-since LSN（2），并在脏页被逐出时更新为该页的 LSN。GetPage 在命中时使用 LwLSN 条目，未命中时使用全局 last-written LSN。</mark></p>
 <p>发生 LFC 未命中时，PS 按 4.3 节所述处理 GetPage@LSN，期间可能从远端存储获取层文件（4 与 5）。计算节点把返回的页面镜像写入其 LFC 并更新 LwLSN 缓存。预取读走的是同一条路径。</p>
 <h3 id="45">4.5 写路径</h3>
 <p>图 7 展示了 Lakebase 的写路径。Lakebase 计算主库以类 Raft 协议复制 PostgreSQL 的 WAL，作为 leader 通过一个以 PostgreSQL 扩展形式实现的 WAL proposer 把 WAL 追加到 Safekeeper。启动时，proposer 通过提出一个新的 term 来选举自己为 leader；一旦 SK 多数派确认了这个更高的 term，它便开始追加 WAL（1）。</p>
