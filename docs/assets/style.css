@@ -60,16 +60,23 @@ code {
   letter-spacing: -0.02em;
 }
 
-nav { display: flex; gap: 20px; }
+nav { display: flex; align-items: center; gap: 20px; }
 nav a {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.92rem;
 }
 nav a:hover { color: var(--accent); }
+nav a.header-github {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2px;
+  padding-left: 16px;
+  border-left: 1px solid var(--line);
+}
 
 .hero {
-  padding: 96px 0 72px;
+  padding: 72px 0 56px;
   border-bottom: 1px solid var(--line);
 }
 
