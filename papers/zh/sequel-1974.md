@@ -9,7 +9,6 @@ venue: "Proceedings of the 1974 ACM SIGFIDET Workshop"
 paperUrl: "/papers/2705-sequel-1974.pdf"
 paperUrlZh: "/papers/zh/sequel-1974/index.html"
 description: "Chamberlin 和 Boyce 提出了结构化英语查询语言 SEQUEL，用 SELECT-FROM-WHERE 块取代了谓词演算，成为 SQL 的雏形"
-pubDate: 2026-07-04
 lang: zh
 tags:
   - sql

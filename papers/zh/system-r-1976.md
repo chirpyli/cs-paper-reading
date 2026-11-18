@@ -21,7 +21,6 @@ venue: "ACM Transactions on Database Systems, Vol. 1, No. 2"
 paperUrl: "/papers/system-r-relational-approach-to-database-management.pdf"
 paperUrlZh: "/papers/zh/system-r-1976/index.html"
 description: "IBM 圣何塞研究实验室的 System R 团队首次完整描述了关系数据库管理系统的架构与实现，涵盖优化器、视图、授权、并发控制、恢复等核心子系统"
-pubDate: 2026-07-04
 lang: zh
 tags:
   - system-r

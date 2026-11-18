@@ -8,7 +8,6 @@ venue: "Communications of the ACM"
 paperUrl: "/papers/Codd_1970_A_relational_model.pdf"
 paperUrlZh: "/papers/zh/codd-relational-model/index.html"
 description: "Codd 提出的关系模型改变了数据管理的范式——从导航式访问到声明式查询"
-pubDate: 2026-07-04
 lang: zh
 tags:
   - relational-model
@@ -103,5 +102,3 @@ Codd 的关系模型也面临挑战：
 
 - [Codd 1981 年图灵奖演讲](https://amturing.acm.org/award_winners/codd_1000892.cfm)：回顾关系数据库的概念诞生
 - [Chamberlin & Boyce (1974)：SEQUEL — SQL 的前身](https://doi.org/10.1145/800296.811515)
-- [为什么会有 SQL](/zh/blog/why-sql-exists/)：本站关于 SQL 设计哲学的博文
-- [RedBook](http://www.redbook.io/) 第 1 章：关系模型回顾

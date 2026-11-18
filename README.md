@@ -77,7 +77,6 @@ https://chirpyli.github.io/cs-paper-reading/
    venue: "Conference / Journal"
    paperUrl: "/papers/my-paper.pdf"
    description: "一句话摘要，会显示在首页"
-   pubDate: 2026-11-18
    lang: zh
    tags: [database, systems]
    topic: systems

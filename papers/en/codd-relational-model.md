@@ -7,7 +7,6 @@ year: 1970
 venue: "Communications of the ACM"
 paperUrl: "/papers/Codd_1970_A_relational_model.pdf"
 description: "Codd's relational model transformed the paradigm of data management — from navigational access to declarative queries"
-pubDate: 2026-07-04
 lang: en
 tags:
   - relational-model

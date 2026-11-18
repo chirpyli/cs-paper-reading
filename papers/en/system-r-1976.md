@@ -21,7 +21,6 @@ venue: "ACM Transactions on Database Systems, Vol. 1, No. 2"
 paperUrl: "/papers/system-r-relational-approach-to-database-management.pdf"
 paperUrlZh: "/papers/zh/system-r-1976/index.html"
 description: "The System R team at IBM San Jose Research Lab presented the first complete architecture of a relational DBMS, covering query optimizer, views, authorization, concurrency control, and crash recovery"
-pubDate: 2026-07-04
 lang: en
 tags:
   - system-r

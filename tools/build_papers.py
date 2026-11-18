@@ -193,7 +193,7 @@ def render(meta: dict, body: str) -> tuple[str, str]:
         "PAPER_TITLE": html.escape(str(meta.get("paperTitle", ""))),
         "AUTHORS": html.escape(" · ".join(meta.get("authors", []))),
         "VENUE": html.escape(
-            f"{meta.get('year', '')} · {meta.get('venue', '')} · 发表于 {meta.get('pubDate', '')}"
+            f"{meta.get('year', '')} · {meta.get('venue', '')}"
         ),
         "TAGS": "\n".join(
             f'          <span class="tag">{html.escape(str(tag))}</span>'

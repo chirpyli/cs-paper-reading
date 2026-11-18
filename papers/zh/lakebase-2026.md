@@ -22,7 +22,6 @@ venue: "PVLDB, Vol. 19, No. 12, pp. 4385-4398"
 paperUrl: "https://www.vldb.org/pvldb/vol19/p4385-pandis.pdf"
 paperUrlZh: "/zh/papers/lakebase-2026/"
 description: "Databricks 提出 Lakebase：第三代事务数据库架构，把全部存储外置到云对象存储并采用开放 PostgreSQL 页格式，实现存算分离、零拷贝分支与 Lakehouse 统一分析"
-pubDate: 2026-09-10
 lang: zh
 tags:
   - postgresql
