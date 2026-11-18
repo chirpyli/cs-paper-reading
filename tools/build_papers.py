@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import html
 import re
+import shutil
 import xml.etree.ElementTree as etree
 from pathlib import Path
 
@@ -19,7 +20,9 @@ from markdown.inlinepatterns import InlineProcessor
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_DIR = ROOT / "papers" / "zh"
+ASSET_SOURCE_DIR = ROOT / "papers" / "assets"
 OUTPUT_DIR = ROOT / "docs" / "papers" / "zh"
+ASSET_OUTPUT_DIR = ROOT / "docs" / "papers"
 HOME_PAGE = ROOT / "docs" / "index.html"
 SOURCE_SITE = "https://peekdb.dev"
 PREFIX = "../../../"
@@ -95,7 +98,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       svg: { fontCache: 'global' }
     };
   </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="%%PREFIX%%assets/mathjax/tex-svg.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -163,6 +166,8 @@ def rewrite_links(body: str) -> str:
     """Rewrite links from the source site to paths valid in this project site."""
     def replace(match: re.Match[str]) -> str:
         prefix, url, suffix = match.groups()
+        if url.startswith("../assets/"):
+            return f"{prefix}../../{url[len('../assets/'):]}{suffix}"
         if url.startswith("/papers/zh/"):
             slug = url[len("/papers/zh/"):].removesuffix("/index.html").strip("/")
             return f"{prefix}../{slug}/{suffix}"
@@ -176,6 +181,18 @@ def rewrite_links(body: str) -> str:
         return match.group(0)
 
     return re.sub(r"(\]\()([^)\s]+)(\))", replace, body)
+
+
+def copy_assets() -> None:
+    """Copy markdown-side assets into the published site."""
+    if not ASSET_SOURCE_DIR.exists():
+        return
+    for source in ASSET_SOURCE_DIR.rglob("*"):
+        if not source.is_file():
+            continue
+        target = ASSET_OUTPUT_DIR / source.relative_to(ASSET_SOURCE_DIR)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
 
 
 def asset_url(url: str) -> str:
@@ -256,6 +273,7 @@ def update_home(papers: list[dict]) -> None:
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     (ROOT / "docs" / ".nojekyll").touch()
+    copy_assets()
     papers = []
     for path in sorted(SOURCE_DIR.glob("*.md")):
         meta, body = load_paper(path)

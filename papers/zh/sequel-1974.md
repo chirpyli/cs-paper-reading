@@ -134,6 +134,4 @@ SEQUEL 的许多设计选择直接进入了 SQL，但也有一些演化和偏离
 ## 5. 延伸阅读
 
 - [Codd (1970): 关系模型的诞生](/zh/papers/codd-relational-model/) —— SEQUEL 的理论基础
-- [为什么会有 SQL](/zh/blog/why-sql-relational-theory/) —— 关系数据库理论产生的历史动机
 - [System R 论文 (1976)](https://scispace.com/pdf/system-r-relational-approach-to-database-management-12pgrxfjws.pdf) —— 第一个 SQL 实现
-- [《SQL and Relational Theory》读书笔记](/zh/blog/sql-and-relational-theory/) —— SQL 与关系模型的比较

@@ -37,17 +37,6 @@ draft: false
 
 **Jasraj Dange, Andrei Dragus, Ali Ghodsi, Haoyu Huang, Yihe Huang, Stas Kelvich, Heikki Linnakangas, Hans Norheim, Ippokratis Pandis, Nikita Shamgunov, Em Sharnoff, John Spray, Zhou Sun, Reynold Xin, Matei Zaharia**
 
-*lakebase@databricks.com*
-
-Databricks
-
-**PVLDB 引用格式：**
-Jasraj Dange, Andrei Dragus, Ali Ghodsi, Haoyu Huang, Yihe Huang, Stas Kelvich, Heikki Linnakangas, Hans Norheim, Ippokratis Pandis, Nikita Shamgunov, Em Sharnoff, John Spray, Zhou Sun, Reynold Xin, Matei Zaharia. Lakebase: Serverless Postgres over Open Lake Storage. PVLDB, 19(12): 4385 - 4398, 2026.
-doi:10.14778/3827998.3828040
-
-> 本作品采用 Creative Commons BY-NC-ND 4.0 国际许可协议授权。访问 https://creativecommons.org/licenses/by-nc-nd/4.0/ 查看该协议副本。超出该协议范围的任何使用，请通过 info@vldb.org 获取许可。版权归作者所有者所有。出版权授予 VLDB Endowment。
-> Proceedings of the VLDB Endowment, Vol. 19, No. 12 ISSN 2150-8097.
-> doi:10.14778/3827998.3828040
 
 ## 摘要
 
@@ -83,7 +72,7 @@ Lakebase 把数据库重新定义为开放、持久存储之上的弹性事务�
 
 **成本敏感性与应用数量的激增：** 智能体式开发大幅降低了创建应用的成本，带来大量短生命周期、实验性的服务，它们大多处于空闲状态、常被丢弃且单体价值低。如图 1（取自 Databricks Lakebase 服务）所示，许多生产数据库实例的存活时间不足 10 秒。这与传统 OLTP 部署严重不匹配——后者假设实例长期存活且计算持续供给。智能体负载反而需要细粒度的弹性、近乎为零的空闲成本与自动化的生命周期管理，不仅要缩减计算，还要缩减运维复杂度，使单个应用的成本保持可忽略。
 
-![图 1：生产环境中观测到的计算实例存活时长。](/papers/lakebase/fig-1.png)
+![图 1：生产环境中观测到的计算实例存活时长。](../assets/lakebase/fig-1.png)
 
 *图 1：生产环境中观测到的计算实例存活时长。*
 
@@ -91,7 +80,7 @@ Lakebase 把数据库重新定义为开放、持久存储之上的弹性事务�
 
 这一点从源代码延伸到数据库状态：每次迭代都会同时从前一版本分支出代码与数据库 [14]。图 2 展示了我们在 Databricks Lakebase 服务中观测到的数据库分支深度。许多生产数据库具有很深的分支层级，有些超过 500 个分支。因此数据库的检查点与分支成为一等原语，为数据库提供了"git checkout -b"式的体验。
 
-![图 2：生产环境中观测到的分支深度。](/papers/lakebase/fig-2.png)
+![图 2：生产环境中观测到的分支深度。](../assets/lakebase/fig-2.png)
 
 *图 2：生产环境中观测到的分支深度。*
 
@@ -135,7 +124,7 @@ OLTP 数据库还必须高可用且高性能，通常要在几毫秒内应答查
 
 图 3 展示了 Lakebase 的架构。Lakebase 将计算与存储分离。它把计算节点的生命周期与其存储解耦，使两者可以独立伸缩，且非 PostgreSQL 计算可以直接操作共享存储。Lakebase Manager 管理一批 PostgreSQL 计算节点；存储控制器（Storage Controller，SC）管理 Pageserver（PS）与 Safekeeper（SK）的多租户存储。所有数据都被持久地存放在对象存储中。一次写入在被复制到 SK 的多数派后即为持久，而 PS 持续物化页面以支持快速读取。
 
-![图 3：Lakebase 架构。](/papers/lakebase/fig-3.png)
+![图 3：Lakebase 架构。](../assets/lakebase/fig-3.png)
 
 *图 3：Lakebase 架构。*
 
@@ -193,7 +182,7 @@ SC 通过周期性存活探测监控 SK 与 PS 的健康状况。SK 故障时，
 
 WAL 存储对性能、持久性与正确性都至关重要。计算主库生成 WAL 字节流，经 Safekeeper（SK）持久地存入对象存储。Pageserver（PS）从 SK 接收 WAL 记录并重放它们，以在特定 LSN 上物化页面镜像，并按请求返回给计算。计算、SK 与 PS 各自跟踪多种 LSN（WAL 流中的字节偏移），以提供持久性、事务一致性与快速崩溃恢复。
 
-![图 4：各组件维护的 WAL 与 LSN。](/papers/lakebase/fig-4.png)
+![图 4：各组件维护的 WAL 与 LSN。](../assets/lakebase/fig-4.png)
 
 *图 4：各组件维护的 WAL 与 LSN。*
 
@@ -219,7 +208,7 @@ Lakebase 支持把子分支从父分支上分离（detach）。分离分支是�
 
 PS 的存储格式是写优化的。到达的 WAL 记录被追加到内存缓冲，缓冲一旦足够大或足够旧，就落盘到 PS 的本地磁盘，并作为增量层（delta layer）上传到远端存储——它是一个覆盖某段键与 LSN 范围的原始 WAL 记录文件，如图 5 所示。增量层摄入不涉及任何 WAL 重放或转换，使 PS 能跟上写密集负载。
 
-![图 5：Pageserver 的存储组织。](/papers/lakebase/fig-5.png)
+![图 5：Pageserver 的存储组织。](../assets/lakebase/fig-5.png)
 
 *图 5：Pageserver 的存储组织。*
 
@@ -245,7 +234,7 @@ PS 以云对象存储作为已持久化层文件的唯一事实来源。它把�
 
 OLTP 应用要求快速读取。图 6 展示了 Lakebase 的读路径。原始 PostgreSQL 从本地文件读取页面，Lakebase 则把工作集缓存在计算侧的本地文件缓存（LFC）中，以获得相当的性能。
 
-![图 6：读路径 GetPage@LSN。](/papers/lakebase/fig-6.png)
+![图 6：读路径 GetPage@LSN。](../assets/lakebase/fig-6.png)
 
 *图 6：读路径 GetPage@LSN。*
 
@@ -259,7 +248,7 @@ OLTP 应用要求快速读取。图 6 展示了 Lakebase 的读路径。原始 P
 
 图 7 展示了 Lakebase 的写路径。Lakebase 计算主库以类 Raft 协议复制 PostgreSQL 的 WAL，作为 leader 通过一个以 PostgreSQL 扩展形式实现的 WAL proposer 把 WAL 追加到 Safekeeper。启动时，proposer 通过提出一个新的 term 来选举自己为 leader；一旦 SK 多数派确认了这个更高的 term，它便开始追加 WAL（1）。
 
-![图 7：写路径。](/papers/lakebase/fig-7.png)
+![图 7：写路径。](../assets/lakebase/fig-7.png)
 
 *图 7：写路径。*
 
@@ -279,7 +268,7 @@ Pageserver 从 SK 摄入 WAL（5）。SK 解码每条记录所影响的页 ID，
 
 Lakebase 的计算与存储组件都是高可用的，见图 8。一个计算及其副本跨不同可用区分布，得益于预热池（warm pool）与存储解耦，失效的主库或副本可在 500 ms 内由新节点修复。客户可以配置带热备的计算高可用组，以便故障时随时接管。计算写入跨 3 个可用区的 3 个 SK 复制，可容忍单节点或单可用区故障。
 
-![图 8：高可用。](/papers/lakebase/fig-8.png)
+![图 8：高可用。](../assets/lakebase/fig-8.png)
 
 *图 8：高可用。*
 
@@ -399,7 +388,7 @@ Direct-to-Storage 加载路径在关系粒度上提供原子性。Spark 先物�
 
 计算启动性能对智能体负载至关重要。Lakebase 始终能实现亚秒级启动。图 9 展示了我们在生产环境中观测到的第 95 百分位计算启动时间（毫秒）。启动时间始终低于 500 ms。这是因为 Lakebase manager 维护着一个预热计算虚拟机池，可随时用于启动新的计算实例。此外，计算启动不执行崩溃恢复：PostgreSQL 启动时把 redo LSN 设为 Pageserver 上已摄入的 last record LSN，而不等待 PS 追上 SK 的最新进度。
 
-![图 9：计算启动时间的 P95（毫秒），Y 轴为对数刻度。](/papers/lakebase/fig-9.png)
+![图 9：计算启动时间的 P95（毫秒），Y 轴为对数刻度。](../assets/lakebase/fig-9.png)
 
 *图 9：计算启动时间的 P95（毫秒），Y 轴为对数刻度。*
 
@@ -411,7 +400,7 @@ Direct-to-Storage 加载路径在关系粒度上提供原子性。Spark 先物�
 
 为展示自动伸缩各维度，我们从生产环境的一个股票交易应用中提取了负载。该负载呈现昼夜模式：白天达到峰值，收市后保持低位。我们使用一个开放世界模拟向数据库发送目标 QPS。计算配置为最少 1 个 CPU、最多 7 个 CPU。
 
-![图 10：计算自动伸缩。](/papers/lakebase/fig-10.png)
+![图 10：计算自动伸缩。](../assets/lakebase/fig-10.png)
 
 *图 10：计算自动伸缩。*
 
@@ -456,7 +445,7 @@ Lakebase 在所有档位上的吞吐都达到或超过 Gen-2。在 1 vCPU 时，
 
 我们使用 TPC-H 评估 Direct Access 并与 Lakebase 对比。scale factor 为 10。我们使用 Lakehouse//RT 的 Direct Access 访问同一份 Lakebase 存储，硬件资源与 Lakebase 相同。
 
-![图 11：Lakebase 与 Lakehouse//RT（在 Lakebase 存储上启用 Direct Access）的 TPC-H 对比。](/papers/lakebase/fig-11.png)
+![图 11：Lakebase 与 Lakehouse//RT（在 Lakebase 存储上启用 Direct Access）的 TPC-H 对比。](../assets/lakebase/fig-11.png)
 
 *图 11：Lakebase 与 Lakehouse//RT（在 Lakebase 存储上启用 Direct Access）的 TPC-H 对比。*
 

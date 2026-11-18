@@ -128,15 +128,36 @@ python3 -m http.server 8000 --directory docs
 
 ## 图片与 PDF
 
-PDF、图片等静态资源放在 `docs/papers/` 下，Markdown 中统一用根路径引用：
+图片放在 `papers/assets/` 下，按论文分目录，与 Markdown 源文件一起维护：
+
+```text
+papers/
+├── assets/
+│   └── lakebase/
+│       └── fig-1.png
+├── zh/
+│   └── lakebase-2026.md
+└── en/
+    └── lakebase-2026.md
+```
+
+在 Markdown 中使用相对于当前文件的路径引用：
 
 ```markdown
-![架构图](/papers/lakebase/fig-1.png)
+![架构图](../assets/lakebase/fig-1.png)
+```
 
+这样 VS Code 等编辑器的 Markdown 预览可以直接显示图片。构建脚本会把
+`papers/assets/` 下的文件复制到 `docs/papers/`，并自动改写为网站可访问的路径，
+不需要维护两份图片。
+
+PDF 仍可放在 `docs/papers/` 下，用根路径引用：
+
+```markdown
 原文：[Paper](/papers/lakebase-2026.pdf)
 ```
 
-frontmatter 中则写：
+frontmatter 中写：
 
 ```yaml
 paperUrl: "/papers/lakebase-2026.pdf"

@@ -83,7 +83,7 @@ At the time of writing, Lakebase creates and manages more than 10 million databa
 
 **Cost Sensitivity and Proliferation of Applications:** Agentic development sharply lowers the cost of creating applications, yielding a proliferation of short-lived, experimental services that are mostly idle, frequently discarded, and individually low-value. As Figure 1 shows, taken from the Databricks Lakebase service, many production database instances stay active for under 10 seconds. This poorly matches traditional OLTP deployments, which assume long-lived instances with continuously provisioned compute. Agentic workloads instead require fine-grained elasticity, near-zero idle cost, and automated lifecycle management, scaling down not only compute but operational complexity, so per-application cost stays negligible.
 
-![Figure 1: Compute lifetime observed in production.](/papers/lakebase/fig-1.png)
+![Figure 1: Compute lifetime observed in production.](../assets/lakebase/fig-1.png)
 
 *Figure 1: Compute lifetime observed in production.*
 
@@ -91,7 +91,7 @@ At the time of writing, Lakebase creates and manages more than 10 million databa
 
 This extends from source code to database state: each iteration branches off both the code and the database of the previous one [14]. Figure 2 shows the database branch depth we observe in the Databricks Lakebase service. Many production databases have deep branching hierarchies, some exceeding 500 branches. Database checkpointing and branching thus become first-class primitives, providing a "git checkout -b" experience for databases.
 
-![Figure 2: Branch depth observed in production.](/papers/lakebase/fig-2.png)
+![Figure 2: Branch depth observed in production.](../assets/lakebase/fig-2.png)
 
 *Figure 2: Branch depth observed in production.*
 
@@ -135,7 +135,7 @@ Traditional OLTP databases impose significant operational burden: administrators
 
 Figure 3 shows the Lakebase architecture. Lakebase separates compute from storage. It decouples a compute node's lifetime from its storage so the two scale independently and non-PostgreSQL computes can operate directly on shared storage. The Lakebase Manager manages a fleet of PostgreSQL Compute nodes; the Storage Controller manages the multi-tenant storage of Pageservers (PSs) and Safekeepers (SKs). All data is durably persisted in object storage. A write is durable once replicated to a quorum of SKs, and PSs continuously materialize pages for fast reads.
 
-![Figure 3: Lakebase architecture.](/papers/lakebase/fig-3.png)
+![Figure 3: Lakebase architecture.](../assets/lakebase/fig-3.png)
 
 *Figure 3: Lakebase architecture.*
 
@@ -193,7 +193,7 @@ This section details the mechanisms underlying Lakebase's storage-compute separa
 
 WAL storage is critical for performance, durability, and correctness. The compute primary generates the WAL byte stream, durably persisted in object storage through Safekeepers (SKs). Pageservers (PSs) receive WAL records from SKs and redo them to materialize page images at specific LSNs, returned to compute on request. Compute, SKs, and PSs each track various LSNs (byte offsets into the WAL stream) to provide durability, transactional consistency, and fast crash recovery.
 
-![Figure 4: WAL and LSNs maintained by components.](/papers/lakebase/fig-4.png)
+![Figure 4: WAL and LSNs maintained by components.](../assets/lakebase/fig-4.png)
 
 *Figure 4: WAL and LSNs maintained by components.*
 
@@ -219,7 +219,7 @@ All persistent data is stored in standard PostgreSQL page format on cloud object
 
 The PS storage format is write-optimized. An incoming WAL record is appended to an in-memory buffer that, once large enough or old enough, is flushed to the PS's local disk and uploaded to remote storage as a delta layer, a file of raw WAL records covering a range of keys and LSNs, shown in Figure 5. Delta-layer ingestion involves no WAL redo or transformation, letting the PS keep up with write-heavy workloads.
 
-![Figure 5: Pageserver storage organization.](/papers/lakebase/fig-5.png)
+![Figure 5: Pageserver storage organization.](../assets/lakebase/fig-5.png)
 
 *Figure 5: Pageserver storage organization.*
 
@@ -245,7 +245,7 @@ We define space amplification in Lakebase as (total Pageserver storage size)/(lo
 
 OLTP applications demand fast reads. Figure 6 shows the read path of Lakebase. Where OSS PostgreSQL reads a page from a local file, Lakebase caches the working set in a compute-side local file cache (LFC) for comparable performance.
 
-![Figure 6: Read path - GetPage@LSN.](/papers/lakebase/fig-6.png)
+![Figure 6: Read path - GetPage@LSN.](../assets/lakebase/fig-6.png)
 
 *Figure 6: Read path - GetPage@LSN.*
 
@@ -259,7 +259,7 @@ On an LFC miss, the PS handles the GetPage@LSN as in subsection 4.3, possibly fe
 
 Figure 7 shows the Lakebase write path. The Lakebase compute primary replicates the PostgreSQL WAL using a Raft-style protocol, acting as the leader that appends WAL to the Safekeepers via a WAL proposer implemented as a PostgreSQL extension. At startup the proposer elects itself leader by proposing a new term; once a SK quorum acknowledges the higher term, it begins appending WAL (1).
 
-![Figure 7: Write path.](/papers/lakebase/fig-7.png)
+![Figure 7: Write path.](../assets/lakebase/fig-7.png)
 
 *Figure 7: Write path.*
 
@@ -279,7 +279,7 @@ The system provides strong durability guarantees in the presence of AZ+1 outages
 
 Lakebase compute and storage components are highly available, see Figure 8. A compute and its replicas span different AZs, and a failed primary or replica is repaired with a new node in under 500 ms thanks to warm pools and storage decoupling. Customers may configure compute HA groups with hot standbys ready to take over on failure. Compute writes are replicated across 3 SKs in 3 AZs, tolerating one node or AZ failure.
 
-![Figure 8: High availability.](/papers/lakebase/fig-8.png)
+![Figure 8: High availability.](../assets/lakebase/fig-8.png)
 
 *Figure 8: High availability.*
 
@@ -399,7 +399,7 @@ Branching on Lakebase is almost instantaneous. It is a $O(1)$ metadata operation
 
 Compute startup performance is critical for agentic workloads. Lakebase consistently achieves sub-second startup times. We show the 95th percentile compute startup in milliseconds observed in production in Figure 9. The startup time is consistently lower than 500 ms. This is because the Lakebase manager maintains a warm pool of compute VMs that are readily available to spin up new computes. Also, compute startup does not perform crash recovery. PostgreSQL starts up with the redo LSN set to the last record LSN ingested on the Pageserver. It does not wait for PS to catch up to the latest of SK.
 
-![Figure 9: P95 Compute startup time (ms), y-axis is in log-scale.](/papers/lakebase/fig-9.png)
+![Figure 9: P95 Compute startup time (ms), y-axis is in log-scale.](../assets/lakebase/fig-9.png)
 
 *Figure 9: P95 Compute startup time (ms), y-axis is in log-scale.*
 
@@ -411,7 +411,7 @@ In contrast, without a warm pool, starting a new compute takes up to several min
 
 To demonstrate the autoscaling dimensions, we extracted a workload from a stock trading application in production. The workload exhibits a diurnal pattern where the workload peaks during the day and stays low when the market closes. We use an open-world simulation that issues the target QPS to the database. The compute is configured with a minimum CPU of 1 and a maximum CPU of 7.
 
-![Figure 10: Compute autoscaling.](/papers/lakebase/fig-10.png)
+![Figure 10: Compute autoscaling.](../assets/lakebase/fig-10.png)
 
 *Figure 10: Compute autoscaling.*
 
@@ -456,7 +456,7 @@ The conventional COPY path serializes ingestion through a single PostgreSQL writ
 
 We use TPC-H to evaluate Direct Access and compare it with Lakebase. The scale factor is 10. We are using Lakehouse//RT with Direct Access to the same Lakebase storage with the same hardware resources as Lakebase.
 
-![Figure 11: TPC-H of Lakebase vs Lakehouse//RT w/ Direct Access on Lakebase storage.](/papers/lakebase/fig-11.png)
+![Figure 11: TPC-H of Lakebase vs Lakehouse//RT w/ Direct Access on Lakebase storage.](../assets/lakebase/fig-11.png)
 
 *Figure 11: TPC-H of Lakebase vs Lakehouse//RT w/ Direct Access on Lakebase storage.*
 
