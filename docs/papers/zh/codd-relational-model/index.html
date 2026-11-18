@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Codd 提出的关系模型改变了数据管理的范式——从导航式访问到声明式查询">
+  <title>关系模型的诞生 · CS Paper Reading</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../../">cs-paper-reading</a>
+      <nav aria-label="主导航">
+        <a href="../../../#about">关于</a>
+        <a href="../../../#papers">论文笔记</a>
+        <a href="../../../#repos">相关仓库</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap paper-page">
+    <article class="paper">
+      <header class="paper-header">
+        <p class="eyebrow">classic / introductory</p>
+        <h1>关系模型的诞生</h1>
+        <p class="paper-original">A Relational Model of Data for Large Shared Data Banks</p>
+        <p class="paper-authors">E. F. Codd</p>
+        <p class="paper-venue">1970 · Communications of the ACM · 发表于 2026-07-04</p>
+        <div class="paper-tags">          <span class="tag">relational-model</span>
+          <span class="tag">sql</span></div>
+        <p class="paper-links"><a href="../../../papers/Codd_1970_A_relational_model.pdf">原文 PDF ↗</a></p>
+      </header>
+
+      <details class="paper-toc">
+        <summary>目录</summary>
+        <div class="toc">
+<ul>
+<li><a href="#tldr">TL;DR</a></li>
+<li><a href="#1">1. 背景与动机</a><ul>
+<li><a href="#1960">1960 年代末的数据库现状</a></li>
+<li><a href="#codd">Codd 的核心洞察</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 核心思想</a><ul>
+<li><a href="#21">2.1 关系作为数据模型</a></li>
+<li><a href="#22">2.2 数据独立性</a></li>
+<li><a href="#23">2.3 关系代数与关系演算</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 对工业界的影响</a><ul>
+<li><a href="#_1">直接遗产</a></li>
+<li><a href="#_2">现代系统继承</a></li>
+<li><a href="#_3">局限性</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 延伸阅读</a></li>
+</ul>
+</div>
+
+      </details>
+
+      <div class="paper-body">
+<h2 id="tldr">TL;DR</h2>
+<p>E. F. Codd 在 1970 年发表的这篇论文提出了<strong>关系数据模型</strong>（Relational Model），用数学上的 n 元关系（n-ary relation）来统一表示数据，并用一阶谓词逻辑作为查询语言的基础。这篇论文彻底改变了数据库领域——从此数据管理从"告诉计算机怎么找数据"变成了"告诉计算机你要什么数据"。</p>
+<h2 id="1">1. 背景与动机</h2>
+<h3 id="1960">1960 年代末的数据库现状</h3>
+<p>在 Codd 发表这篇论文之前，数据库系统主要依赖两种模型：</p>
+<ul>
+<li><strong>层次模型</strong>（Hierarchical Model）：如 IBM 的 IMS，数据组织为树形结构</li>
+<li><strong>网状模型</strong>（Network Model）：如 CODASYL 标准，数据组织为图结构</li>
+</ul>
+<p>这两种模型的共同问题：<strong>数据独立性极差</strong>。程序员必须了解数据的物理存储方式，查询逻辑与数据访问路径强耦合。</p>
+<h3 id="codd">Codd 的核心洞察</h3>
+<p>Codd 在 IBM San Jose 实验室工作期间，观察到三个关键痛点：</p>
+<ol>
+<li><strong>排序依赖</strong>（Ordering Dependence）：数据的物理顺序变化会导致应用程序需要修改</li>
+<li><strong>索引依赖</strong>（Indexing Dependence）：添加或删除索引会影响程序的正确性</li>
+<li><strong>访问路径依赖</strong>（Access Path Dependence）：程序员必须显式指定遍历数据的方式</li>
+</ol>
+<p>Codd 的解决方案：<strong>用数学关系（relation）抽象数据，让系统而非程序员决定访问路径</strong>。</p>
+<h2 id="2">2. 核心思想</h2>
+<h3 id="21">2.1 关系作为数据模型</h3>
+<p>Codd 用一个简单的思想统一了所有数据：<strong>所有数据都可以表示为 n 元关系（表）</strong>。</p>
+<p>一个关系 R 是笛卡尔积 S₁ × S₂ × ... × Sₙ 的子集，其中每个 Sᵢ 是一个域（domain）。直观理解就是一张有行和列的表。</p>
+<p><strong>关键抽象</strong>：
+- 关系的行之间没有隐含的顺序
+- 列由属性名（非位置）标识
+- 每个单元格的值是原子的（第一范式）</p>
+<h3 id="22">2.2 数据独立性</h3>
+<p>论文最重要的贡献之一是明确定义了两种数据独立性：</p>
+<ul>
+<li><strong>逻辑数据独立性</strong>：可以在不影响已有查询的情况下添加新的列或关系</li>
+<li><strong>物理数据独立性</strong>：可以改变存储结构、索引而无需修改查询</li>
+</ul>
+<h3 id="23">2.3 关系代数与关系演算</h3>
+<p>论文提出了两种等价的查询语言：</p>
+<ul>
+<li><strong>关系代数</strong>（Relational Algebra）：一组操作原语（选择、投影、连接、并、差、笛卡尔积）</li>
+<li><strong>关系演算</strong>（Relational Calculus）：基于一阶谓词逻辑的声明式语言 <code>{ x | P(x) }</code></li>
+</ul>
+<p>这两种语言奠定了 SQL 的理论基础。</p>
+<h2 id="3">3. 对工业界的影响</h2>
+<h3 id="_1">直接遗产</h3>
+<ul>
+<li><strong>System R (IBM, 1974-1979)</strong>：第一个 SQL 实现，验证了关系模型的工业可行性</li>
+<li><strong>Ingres (UC Berkeley, 1974-1980)</strong>：影响了 PostgreSQL 的设计</li>
+<li><strong>Oracle (1979)</strong>：第一个商业关系数据库</li>
+</ul>
+<h3 id="_2">现代系统继承</h3>
+<p>至今，几乎所有主流数据库都基于关系模型或其扩展：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>与关系模型的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>关系模型 + 对象扩展</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>纯关系模型</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>嵌入式关系模型</td>
+</tr>
+<tr>
+<td>DuckDB</td>
+<td>列存关系模型，嵌入关系代数优化器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">局限性</h3>
+<p>Codd 的关系模型也面临挑战：</p>
+<ul>
+<li><strong>阻抗不匹配</strong>（Impedance Mismatch）：关系模型与面向对象编程语言之间的鸿沟催生了 ORM</li>
+<li><strong>Schema 刚性问题</strong>：催生了 NoSQL 运动（但关系模型通过 JSON/JSONB 适应了这一挑战）</li>
+<li><strong>分布式扩展</strong>：ACID 严格保证在分布式环境下成本高昂，但 NewSQL 在努力弥合</li>
+</ul>
+<h2 id="4">4. 延伸阅读</h2>
+<ul>
+<li><a href="https://amturing.acm.org/award_winners/codd_1000892.cfm">Codd 1981 年图灵奖演讲</a>：回顾关系数据库的概念诞生</li>
+<li><a href="https://doi.org/10.1145/800296.811515">Chamberlin &amp; Boyce (1974)：SEQUEL — SQL 的前身</a></li>
+<li><a href="https://peekdb.dev/zh/blog/why-sql-exists/">为什么会有 SQL</a>：本站关于 SQL 设计哲学的博文</li>
+<li><a href="http://www.redbook.io/">RedBook</a> 第 1 章：关系模型回顾</li>
+</ul>
+      </div>
+    </article>
+
+    <p class="paper-back"><a href="../../../#papers">← 返回论文笔记列表</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 chirpyli</span>
+      <span>Built with GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>

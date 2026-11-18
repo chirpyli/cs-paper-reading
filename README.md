@@ -20,11 +20,20 @@ https://chirpyli.github.io/cs-paper-reading/
 
 ```
 .
-├── docs/               # 站点源文件（GitHub Pages 的发布目录）
-│   ├── index.html      # 首页
-│   ├── assets/
-│   │   └── style.css   # 样式
-│   └── .nojekyll       # 禁用 Jekyll，原样发布静态文件
+├── papers/                   # 论文 Markdown 源文件（唯一需要日常维护的目录）
+│   └── zh/*.md               # 每篇论文一个文件，含 frontmatter
+├── docs/                     # 构建产物 + 站点静态资源
+│   ├── index.html            # 首页，论文列表由构建脚本自动同步
+│   ├── assets/style.css      # 全站样式（含高亮/下划线样式）
+│   ├── papers/
+│   │   ├── zh/<slug>/index.html  # 生成的论文页面
+│   │   ├── lakebase/             # 论文配图
+│   │   └── *.pdf                 # 原论文 PDF
+│   └── .nojekyll             # 禁用 Jekyll，原样发布静态文件
+├── tools/build_papers.py     # Markdown → 静态页面生成脚本
+├── .github/workflows/
+│   └── deploy-pages.yml      # 推送后自动构建并发布到 GitHub Pages
+├── requirements.txt          # 构建依赖
 ├── LICENSE
 └── README.md
 ```
@@ -35,41 +44,106 @@ https://chirpyli.github.io/cs-paper-reading/
 
    ```bash
    git add .
-   git commit -m "Add GitHub Pages project site"
+   git commit -m "Set up GitHub Pages with Actions"
    git push origin master
    ```
 
 2. 打开仓库的 GitHub 网页：`https://github.com/chirpyli/cs-paper-reading`
 
-3. 进入 **Settings → Pages**（左侧栏）。
+3. 进入 **Settings → Pages**。
 
 4. 在 **Build and deployment** 中：
 
-   - **Source** 选择 `Deploy from a branch`
-   - **Branch** 选择 `master`
-   - **Folder** 选择 `/docs`
+   - **Source** 选择 `GitHub Actions`
    - 点击 **Save**
 
-5. 等待几十秒到几分钟，刷新 `https://chirpyli.github.io/cs-paper-reading/` 即可看到页面。
+5. 推送后 `.github/workflows/deploy-pages.yml` 会自动构建 `docs/` 并发布。
+   等待几十秒到几分钟，刷新 `https://chirpyli.github.io/cs-paper-reading/` 即可看到页面。
 
-## 日常更新
+> 构建脚本仍会把结果写入 `docs/`，因此也可以继续用 `Deploy from a branch → master / docs`。
+> 但推荐切换为 `GitHub Actions`，这样本地只需要维护 `papers/` 下的 Markdown。
 
-修改 `docs/` 下的文件后，正常提交推送即可，GitHub Pages 会自动重新发布：
+## 日常发布：只需新增一篇 Markdown
+
+1. 在 `papers/zh/` 下新增文件，例如 `my-paper.md`。文件名即页面 URL 中的 `<slug>`。
+2. 复制已有笔记的 frontmatter，按需修改：
+
+   ```yaml
+   ---
+   title: "中文标题"
+   paperTitle: "Paper Title"
+   authors: ["Author A", "Author B"]
+   year: 2026
+   venue: "Conference / Journal"
+   paperUrl: "/papers/my-paper.pdf"
+   description: "一句话摘要，会显示在首页"
+   pubDate: 2026-11-18
+   lang: zh
+   tags: [database, systems]
+   topic: systems
+   difficulty: intermediate
+   featured: false
+   draft: false   # true 时不会生成页面，适合写作中
+   ---
+   ```
+
+3. 提交并推送：
+
+   ```bash
+   git add papers/zh/my-paper.md
+   git commit -m "Add note: my paper"
+   git push origin master
+   ```
+
+4. GitHub Actions 自动运行 `tools/build_papers.py`，生成
+   `docs/papers/zh/my-paper/index.html`、刷新首页列表，并发布到 Pages。
+
+本地预览（可选）：
 
 ```bash
-git add docs/
-git commit -m "Update site"
-git push origin master
+pip install -r requirements.txt
+python3 tools/build_papers.py
+python3 -m http.server 8000 --directory docs
 ```
 
-## 可选：改用 GitHub Actions 发布
+## 论文笔记中的 Markdown 写法
 
-如果以后需要构建步骤（例如 Jekyll / Hugo / Vite），可以改为 Actions 发布：
+| 想实现的效果 | 在 Markdown 中写 | 生成结果 |
+| --- | --- | --- |
+| 加粗 | `**重点**` | **重点** |
+| 斜体 | `*强调*` | *强调* |
+| 黄色高亮 | `==重点==` | <mark>重点</mark> |
+| 彩色高亮 | `==red:结论==` | <mark class="mark-red">结论</mark> |
+| 下划线 | `++关键字++` | <u>关键字</u> |
+| 删除线 | `~~旧结论~~` | <del>旧结论</del> |
+| 告示块 | `!!! note "标题"` + 缩进内容 | 带左边框的提示卡片 |
 
-1. 在 **Settings → Pages → Source** 选择 `GitHub Actions`。
-2. 新增 `.github/workflows/deploy-pages.yml`，在构建步骤后上传 `docs/` 作为 artifact，再用 `actions/deploy-pages@v4` 部署。
+彩色高亮支持：`red`、`blue`、`green`、`orange`、`purple`、`gray`。
+例如：
 
-这样可以把站点源文件和构建产物彻底分离。
+```markdown
+==这是黄色高亮==，==red:这是红色高亮==，++这是下划线++，**==重要结论==**。
+```
+
+也可以使用原生 HTML：`<mark class="mark-blue">蓝色</mark>`、`<u>下划线</u>`。
+
+## 图片与 PDF
+
+PDF、图片等静态资源放在 `docs/papers/` 下，Markdown 中统一用根路径引用：
+
+```markdown
+![架构图](/papers/lakebase/fig-1.png)
+
+原文：[Paper](/papers/lakebase-2026.pdf)
+```
+
+frontmatter 中则写：
+
+```yaml
+paperUrl: "/papers/lakebase-2026.pdf"
+```
+
+构建脚本会自动把 `/papers/...` 改写为适合 GitHub Pages 子路径的相对链接。
 
 ## 自定义域名（可选）
 

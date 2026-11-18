@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chamberlin 和 Boyce 提出了结构化英语查询语言 SEQUEL，用 SELECT-FROM-WHERE 块取代了谓词演算，成为 SQL 的雏形">
+  <title>SQL 的前身：SEQUEL 的诞生 · CS Paper Reading</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../../">cs-paper-reading</a>
+      <nav aria-label="主导航">
+        <a href="../../../#about">关于</a>
+        <a href="../../../#papers">论文笔记</a>
+        <a href="../../../#repos">相关仓库</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap paper-page">
+    <article class="paper">
+      <header class="paper-header">
+        <p class="eyebrow">optional / introductory</p>
+        <h1>SQL 的前身：SEQUEL 的诞生</h1>
+        <p class="paper-original">SEQUEL: A Structured English Query Language</p>
+        <p class="paper-authors">Donald D. Chamberlin · Raymond F. Boyce</p>
+        <p class="paper-venue">1974 · Proceedings of the 1974 ACM SIGFIDET Workshop · 发表于 2026-07-04</p>
+        <div class="paper-tags">          <span class="tag">sql</span>
+          <span class="tag">sequel</span>
+          <span class="tag">query-language</span></div>
+        <p class="paper-links"><a href="../../../papers/2705-sequel-1974.pdf">原文 PDF ↗</a></p>
+      </header>
+
+      <details class="paper-toc">
+        <summary>目录</summary>
+        <div class="toc">
+<ul>
+<li><a href="#tldr">TL;DR</a></li>
+<li><a href="#1">1. 背景与动机</a><ul>
+<li><a href="#square-sequel">从 SQUARE 到 SEQUEL</a></li>
+<li><a href="#_1">目标用户</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 核心思想</a><ul>
+<li><a href="#21-select-from-where">2.1 SELECT-FROM-WHERE 模板</a></li>
+<li><a href="#22-mapping">2.2 映射（Mapping）作为查询基元</a></li>
+<li><a href="#23-group-by">2.3 GROUP BY 的引入</a></li>
+<li><a href="#24">2.4 块标签与自引用查询</a></li>
+<li><a href="#25">2.5 结构化组合规则</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 对工业界的影响</a><ul>
+<li><a href="#_2">直接遗产</a></li>
+<li><a href="#sequel-sql">SEQUEL 与 SQL 的设计差异</a></li>
+<li><a href="#_3">现代系统的继承</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 局限性</a></li>
+<li><a href="#5">5. 延伸阅读</a></li>
+</ul>
+</div>
+
+      </details>
+
+      <div class="paper-body">
+<h2 id="tldr">TL;DR</h2>
+<p>Chamberlin 和 Boyce 在 1974 年提出了 SEQUEL（Structured English Query Language）——后来因商标原因改名为 SQL。SEQUEL 的设计目标是为非计算机专业用户（会计师、工程师、建筑师等）提供一种类英语的数据库查询方式，用 SELECT-FROM-WHERE 块的简单模板取代了基于谓词演算的语言中复杂的量词和约束变量。</p>
+<h2 id="1">1. 背景与动机</h2>
+<h3 id="square-sequel">从 SQUARE 到 SEQUEL</h3>
+<p>SEQUEL 的前身是 Boyce 和 Chamberlin 在 1973 年开发的 SQUARE 语言。SQUARE 已经成功地消除了谓词演算中的量词和显式链接项，但其使用简洁的数学记法，对普通用户来说学习门槛仍然太高。</p>
+<p>SEQUEL 的关键设计转变：
+- <strong>数学记法 → 英语关键词</strong>：用 <code>SELECT ... FROM ... WHERE</code> 替代 SQUARE 中的上下标映射记法
+- <strong>自顶向下结构化编程</strong>：查询以嵌套的块结构组织，支持渐进式构建
+- <strong>线性记法</strong>：查询从左到右、从上到下阅读，符合自然阅读习惯</p>
+<h3 id="_1">目标用户</h3>
+<p>论文明确将 SEQUEL 定位为面向"非计算机专家的知识工作者"——会计师、工程师、建筑师、城市规划师。这一设计哲学深刻影响了 SQL 至今"声明式、类自然语言"的核心特质。</p>
+<h2 id="2">2. 核心思想</h2>
+<h3 id="21-select-from-where">2.1 SELECT-FROM-WHERE 模板</h3>
+<p>SEQUEL 最基础的创新是 SELECT-FROM-WHERE 三组件模板：</p>
+<pre><code>SELECT   要查询的列
+FROM     数据所在表
+WHERE    筛选条件
+</code></pre>
+<p>这个模板模拟了人们使用表格的自然方式——"从某张表中，选择某些列，当行满足某些条件时"。论文指出，在交互式系统中，"这个模板可以被呈现给用户，用户只需填空即可"。这种设计使 SEQUEL 具备了极低的学习门槛。</p>
+<h3 id="22-mapping">2.2 映射（Mapping）作为查询基元</h3>
+<p>SEQUEL 将查询建模为"映射"操作：
+- 每个 SELECT-FROM-WHERE 块定义了一个从表到结果集的映射
+- 映射可以任意嵌套——内部映射的输出作为外部映射的匹配条件
+- 映射的结果是值集合，支持集合运算（并、交、差）</p>
+<p>这与 Codd 关系代数的闭包性质一脉相承：每个映射的输入和输出都是集合，因此可以任意组合。</p>
+<h3 id="23-group-by">2.3 GROUP BY 的引入</h3>
+<p>论文首次提出了 GROUP BY 子句的概念，用于解决"需要将表中的行按某列值分组后再进行聚合操作"的常见查询模式。</p>
+<p><strong>关键洞察</strong>：在 SQUARE 中，这类"分组"查询需要引入自由变量（如 <code>x: EMP</code>），而 SEQUEL 用 <code>GROUP BY</code> 语法糖优雅地消除了自由变量的需要。</p>
+<pre><code class="language-sql">-- SQUARE（需要自由变量）
+x: EMP : COUNT( EMP(x.MGR = x.NAME) ) &gt; 10
+
+-- SEQUEL（用 GROUP BY 消除自由变量）
+SELECT MGR
+FROM EMP GROUP BY MGR
+WHERE COUNT(NAME) &gt; 10
+</code></pre>
+<h3 id="24">2.4 块标签与自引用查询</h3>
+<p>SEQUEL 允许为映射块附加标签（如 <code>B1:</code>），用于解决自引用查询中的列歧义——例如"查询薪水高于其经理的员工"这类需要将同一表的不同行进行关联的查询。这一特性在后来被 SQL 的<strong>表别名</strong>（correlation name）机制所继承。</p>
+<h3 id="25">2.5 结构化组合规则</h3>
+<p>SEQUEL 的核心设计哲学是：<strong>将复杂查询简化为几个基本构建块 + 一套简单的组合规则</strong>。</p>
+<pre><code>基本构建块 = SELECT-FROM-WHERE 映射
+组合规则   = 嵌套 | 集合运算 | 分组 | 标签引用
+</code></pre>
+<p>这种设计受结构化编程思想（Dijkstra 等）的直接影响，其美学价值在于：用户只需要理解一个模式（SELECT-FROM-WHERE），就可以通过反复应用组合规则来构建任意复杂的查询。</p>
+<h2 id="3">3. 对工业界的影响</h2>
+<h3 id="_2">直接遗产</h3>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1974</td>
+<td>Chamberlin &amp; Boyce 发表 SEQUEL 论文</td>
+</tr>
+<tr>
+<td>1974–1979</td>
+<td>IBM System R 实现 SEQUEL/2（后改名 SQL）</td>
+</tr>
+<tr>
+<td>1979</td>
+<td>Oracle V2 成为首个商业 SQL 实现</td>
+</tr>
+<tr>
+<td>1986</td>
+<td>ANSI 采纳 SQL 为标准（SQL-86）</td>
+</tr>
+<tr>
+<td>1987</td>
+<td>ISO 采纳 SQL 为国际标准</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sequel-sql">SEQUEL 与 SQL 的设计差异</h3>
+<p>SEQUEL 的许多设计选择直接进入了 SQL，但也有一些演化和偏离：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>SEQUEL (1974)</th>
+<th>SQL (现代)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本查询块</td>
+<td>SELECT-FROM-WHERE</td>
+<td>SELECT-FROM-WHERE（与 SEQUEL 一致）</td>
+</tr>
+<tr>
+<td>集合运算</td>
+<td>支持 ∩, ∪, −</td>
+<td>支持 INTERSECT, UNION, EXCEPT</td>
+</tr>
+<tr>
+<td>聚合函数</td>
+<td>SUM, COUNT, AVG, MAX, MIN, SET</td>
+<td>增加了标准差、方差等</td>
+</tr>
+<tr>
+<td>GROUP BY</td>
+<td>有</td>
+<td>有（SEQUEL 首创）</td>
+</tr>
+<tr>
+<td>HAVING</td>
+<td>无（用 WHERE 代替）</td>
+<td>独立 HAVING 子句</td>
+</tr>
+<tr>
+<td>块标签</td>
+<td><code>B1: SELECT ... WHERE ... = B1.MGR</code></td>
+<td>表别名（correlation name）</td>
+</tr>
+<tr>
+<td>ORDER BY</td>
+<td>无</td>
+<td>有（后来加入）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">现代系统的继承</h3>
+<ul>
+<li><strong>所有 SQL 数据库</strong>直接继承 SEQUEL 的 SELECT-FROM-WHERE 范式</li>
+<li><strong>DuckDB</strong> 的向量化执行引擎在内部将 SQL 映射为关系代数操作树，与 SEQUEL 的"映射组合"思想一脉相承</li>
+<li><strong>GoogleSQL / BigQuery</strong>、<strong>Presto</strong> 等大数据查询引擎仍然使用相同的语法模板</li>
+</ul>
+<h2 id="4">4. 局限性</h2>
+<ul>
+<li><strong>SEQUEL 是纯查询语言</strong>：不包含 DDL（数据定义）、DCL（权限控制）等，这些在 System R 中才逐步加入</li>
+<li><strong>无 ORDER BY</strong>：论文原版不支持排序，用户需要自行处理结果顺序</li>
+<li><strong>GROUP BY 语义较初代</strong>：不支持 HAVING 子句（聚合后的条件直接用 WHERE 写），这在后续 SQL 标准中被纠正</li>
+<li><strong>字符串/数字比较的朴素处理</strong>：用引号包裹（<code>'8000'</code>），缺乏现代 SQL 的类型系统</li>
+</ul>
+<h2 id="5">5. 延伸阅读</h2>
+<ul>
+<li><a href="../codd-relational-model/">Codd (1970): 关系模型的诞生</a> —— SEQUEL 的理论基础</li>
+<li><a href="https://peekdb.dev/zh/blog/why-sql-relational-theory/">为什么会有 SQL</a> —— 关系数据库理论产生的历史动机</li>
+<li><a href="https://scispace.com/pdf/system-r-relational-approach-to-database-management-12pgrxfjws.pdf">System R 论文 (1976)</a> —— 第一个 SQL 实现</li>
+<li><a href="https://peekdb.dev/zh/blog/sql-and-relational-theory/">《SQL and Relational Theory》读书笔记</a> —— SQL 与关系模型的比较</li>
+</ul>
+      </div>
+    </article>
+
+    <p class="paper-back"><a href="../../../#papers">← 返回论文笔记列表</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 chirpyli</span>
+      <span>Built with GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>

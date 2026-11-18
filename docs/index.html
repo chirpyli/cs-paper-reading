@@ -44,13 +44,31 @@
 
     <section id="papers" class="section">
       <h2>论文笔记</h2>
-      <p>在这里列出你的阅读笔记。每新增一篇，加一条即可：</p>
+      <p>笔记按论文发表年份排列，由 <code>papers/zh/</code> 下的 Markdown 源文件生成。</p>
+      <!-- PAPERS START -->
       <ul class="note-list">
         <li>
-          <span class="tag">待补充</span>
-          <span>在 <code>docs/papers/</code> 下新增页面，并把链接加到这里。</span>
+          <a class="note-link" href="papers/zh/codd-relational-model/">关系模型的诞生</a>
+          <span class="note-desc">Codd 提出的关系模型改变了数据管理的范式——从导航式访问到声明式查询</span>
+          <span class="tag">1970 · Communications of the ACM</span>
+        </li>
+        <li>
+          <a class="note-link" href="papers/zh/sequel-1974/">SQL 的前身：SEQUEL 的诞生</a>
+          <span class="note-desc">Chamberlin 和 Boyce 提出了结构化英语查询语言 SEQUEL，用 SELECT-FROM-WHERE 块取代了谓词演算，成为 SQL 的雏形</span>
+          <span class="tag">1974 · Proceedings of the 1974 ACM SIGFIDET Workshop</span>
+        </li>
+        <li>
+          <a class="note-link" href="papers/zh/system-r-1976/">System R：关系数据库管理的里程碑</a>
+          <span class="note-desc">IBM 圣何塞研究实验室的 System R 团队首次完整描述了关系数据库管理系统的架构与实现，涵盖优化器、视图、授权、并发控制、恢复等核心子系统</span>
+          <span class="tag">1976 · ACM Transactions on Database Systems, Vol. 1, No. 2</span>
+        </li>
+        <li>
+          <a class="note-link" href="papers/zh/lakebase-2026/">Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算</a>
+          <span class="note-desc">Databricks 提出 Lakebase：第三代事务数据库架构，把全部存储外置到云对象存储并采用开放 PostgreSQL 页格式，实现存算分离、零拷贝分支与 Lakehouse 统一分析</span>
+          <span class="tag">2026 · PVLDB, Vol. 19, No. 12, pp. 4385-4398</span>
         </li>
       </ul>
+      <!-- PAPERS END -->
     </section>
 
     <section id="repos" class="section">

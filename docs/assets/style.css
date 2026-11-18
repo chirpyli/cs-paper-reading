@@ -166,8 +166,137 @@ h1 {
 }
 .footer-inner { display: flex; justify-content: space-between; gap: 16px; }
 
+.note-list li { flex-wrap: wrap; }
+.note-link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  min-width: 240px;
+}
+.note-link:hover { color: var(--accent); }
+.note-desc { flex: 1 1 320px; }
+.note-list .tag { order: 3; }
+
+.paper-page { padding: 48px 0 24px; }
+
+.paper-header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+}
+.paper-header h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 10px; }
+.paper-original {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0 0 14px;
+}
+.paper-authors, .paper-venue { color: var(--muted); font-size: 0.9rem; margin: 0 0 6px; }
+.paper-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 12px; }
+.paper-links a { color: var(--accent); font-size: 0.9rem; margin-right: 16px; }
+
+.paper-toc {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin-bottom: 32px;
+}
+.paper-toc summary { cursor: pointer; color: var(--accent); font-size: 0.9rem; }
+.paper-toc .toc ul { margin: 10px 0 0; padding-left: 1.4em; }
+.paper-toc .toc a { color: var(--muted); text-decoration: none; }
+.paper-toc .toc a:hover { color: var(--accent); }
+
+.paper-body h2 {
+  font-size: 1.4rem;
+  margin: 2.2em 0 0.6em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--line);
+}
+.paper-body h3 { font-size: 1.15rem; margin: 1.8em 0 0.5em; }
+.paper-body h4 { font-size: 1rem; margin: 1.4em 0 0.4em; }
+.paper-body p, .paper-body ul, .paper-body ol { margin: 0 0 1.1em; }
+.paper-body ul, .paper-body ol { padding-left: 1.6em; }
+.paper-body li { margin: 0.3em 0; }
+.paper-body a { color: var(--accent); }
+.paper-body blockquote {
+  border-left: 3px solid var(--line);
+  background: #f0f2ef;
+  color: var(--muted);
+  margin: 1.4em 0;
+  padding: 0.6em 1em;
+}
+.paper-body blockquote p:last-child { margin-bottom: 0; }
+.paper-body pre {
+  background: #eef0ed;
+  padding: 14px 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+.paper-body pre code { background: transparent; padding: 0; }
+.paper-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.2em auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.paper-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.4em 0;
+  font-size: 0.93rem;
+}
+.paper-body th, .paper-body td {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  text-align: left;
+}
+.paper-body th { background: #eef0ed; }
+.paper-body hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+.mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+
+.paper-back { margin-top: 40px; }
+.paper-back a { color: var(--accent); text-decoration: none; }
+
+/* Markdown inline annotations: ==text== / ==red:text== / ++text++ */
+.paper-body mark {
+  background: #fff2a8;
+  color: inherit;
+  padding: 0.05em 0.22em;
+  border-radius: 3px;
+}
+.paper-body mark.mark-red { background: #ffe1e1; color: #8a2020; }
+.paper-body mark.mark-blue { background: #dcecff; color: #174a7e; }
+.paper-body mark.mark-green { background: #dcf3e1; color: #1a6332; }
+.paper-body mark.mark-orange { background: #ffead2; color: #8a4b12; }
+.paper-body mark.mark-purple { background: #ece0ff; color: #5b2e8a; }
+.paper-body mark.mark-gray { background: #e8eaed; color: #42474d; }
+.paper-body u {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.paper-body del { color: var(--muted); }
+
+.paper-body .admonition {
+  border-left: 3px solid var(--accent);
+  background: #eef4f1;
+  border-radius: 4px;
+  padding: 0.6em 1em;
+  margin: 1.4em 0;
+}
+.paper-body .admonition p:last-child { margin-bottom: 0; }
+.paper-body .admonition-title { font-weight: 700; color: var(--accent); }
+
 @media (max-width: 560px) {
   .hero { padding: 64px 0 48px; }
   .header-inner { flex-direction: column; align-items: flex-start; padding: 14px 0; }
   .repo-list li { flex-direction: column; gap: 2px; }
+  .note-list li { flex-direction: column; gap: 4px; }
+  .note-link { min-width: 0; }
 }
