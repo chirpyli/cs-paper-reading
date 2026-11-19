@@ -20,6 +20,8 @@ https://chirpyli.github.io/cs-paper-reading/
 | 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
 | 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | ★★★★★ |
 | 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ★★★★★ |
+| 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-1978/) | ★★★★★ |
+| 1978 | [分布式系统中的时间、时钟与事件序列（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-study-notes/) | ★★★★☆ |
 | 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | ★★★★★ |
 | 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-2017/) | ★★★★★ |
 | 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-analysis/) | ★★★☆☆ |
