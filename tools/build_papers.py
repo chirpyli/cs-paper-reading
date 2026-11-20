@@ -312,20 +312,17 @@ def update_readme(papers: list[dict]) -> None:
     def cell(value: object) -> str:
         return str(value).replace("|", "\\|")
 
-    def rating_stars(paper: dict) -> str:
-        try:
-            value = int(paper.get("rating", 5))
-        except (TypeError, ValueError):
-            value = 5
-        value = max(1, min(5, value))
-        return "★" * value + "☆" * (5 - value)
+    def recommend_reason(paper: dict) -> str:
+        return str(paper.get("reason") or paper.get("description") or "—")
 
-    lines = ["| 年份 | 论文 | 推荐程度 |", "| --- | --- | --- |"]
+    lines = ["| 年份 | 论文 | 推荐原因 |", "| --- | --- | --- |"]
     for paper in papers:
+        if paper["slug"].endswith("-notes"):
+            continue
         url = f"{SITE_URL}/papers/zh/{paper['slug']}/"
         lines.append(
             f"| {cell(paper.get('year', ''))} | "
-            f"[{cell(paper['title'])}]({url}) | {rating_stars(paper)} |"
+            f"[{cell(paper['title'])}]({url}) | {cell(recommend_reason(paper))} |"
         )
     block = start + "\n" + "\n".join(lines) + "\n" + end
     updated = re.sub(

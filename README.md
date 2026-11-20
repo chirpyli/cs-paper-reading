@@ -15,31 +15,26 @@ https://chirpyli.github.io/cs-paper-reading/
 列表由构建脚本根据 `papers/zh/*.md` 自动生成。
 
 <!-- PAPERS START -->
-| 年份 | 论文 | 推荐程度 |
+| 年份 | 论文 | 推荐原因 |
 | --- | --- | --- |
-| 1936 | [论可计算数及其在判定问题中的应用](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers/) | ★★★★★ |
-| 1936 | [可计算数与通用机器：图灵 1936 年论文学习笔记](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers-notes/) | ★★★★★ |
-| 1946 | [电子计算仪器逻辑设计的初步讨论](https://chirpyli.github.io/cs-paper-reading/papers/zh/ias-computer-logical-design/) | ★★★★★ |
-| 1946 | [IAS 计算机逻辑设计（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/ias-computer-logical-design-notes/) | ★★★★★ |
-| 1970 | [大型共享数据库的关系模型](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
-| 1970 | [关系模型的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model-notes/) | ★★★★★ |
-| 1970 | [虚拟内存](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory/) | ★★★★★ |
-| 1970 | [虚拟内存：地址空间的抽象与工作集理论](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory-notes/) | ★★★★★ |
-| 1974 | [SEQUEL：一种结构化的英语查询语言](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel/) | ★★★★★ |
-| 1974 | [SQL 的前身：SEQUEL 的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-notes/) | ★★★★★ |
-| 1976 | [System R：面向数据库管理的关系方法](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r/) | ★★★★★ |
-| 1976 | [System R：关系数据库管理的里程碑（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-notes/) | ★★★★★ |
-| 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks/) | ★★★★★ |
-| 1978 | [分布式系统中的时间、时钟与事件序列（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-notes/) | ★★★★☆ |
-| 2014 | [Raft：寻找一种易于理解的共识算法](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft/) | ★★★★★ |
-| 2014 | [Raft 共识算法（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft-notes/) | ★★★★☆ |
-| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake/) | ★★★★★ |
-| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora/) | ★★★★★ |
-| 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-notes/) | ★★★☆☆ |
-| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates/) | ★★★★☆ |
-| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute/) | ★★★★☆ |
-| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase/) | ★★★★★ |
-| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability/) | ★★★★☆ |
+| 1936 | [论可计算数及其在判定问题中的应用](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers/) | 图灵 1936 年奠基性论文全文：自动机、可计算序列、通用机、对角论证、判定问题不可解性，并附论文修正与注释 |
+| 1946 | [电子计算仪器逻辑设计的初步讨论](https://chirpyli.github.io/cs-paper-reading/papers/zh/ias-computer-logical-design/) | IAS 1946 年报告全文：并行存储程序计算机、Selectron 存储器、40 位字长、累加器、乘除法、指令编码与控制器的逻辑设计 |
+| 1948 | [通信的数学理论](https://chirpyli.github.io/cs-paper-reading/papers/zh/shannon-mathematical-theory-of-communication/) | 香农 1948 年信息论奠基论文全文中文翻译：信息熵、信道容量、编码定理、有噪信道、连续信道、率失真理论与数学附录 |
+| 1955 | [关于举办达特茅斯人工智能夏季研究项目的提案](https://chirpyli.github.io/cs-paper-reading/papers/zh/dartmouth-ai-proposal/) | 1955 年达特茅斯人工智能提案全文中文翻译：人工智能研究纲领、自动计算机、语言、神经网络、计算复杂性、自我改进、抽象、随机性与创造性，以及四位发起人的研究计划 |
+| 1965 | [把更多元件塞进集成电路](https://chirpyli.github.io/cs-paper-reading/papers/zh/moore-cramming-more-components/) | 摩尔 1965 年原文中文翻译：集成电路元件数、成本曲线、每年翻倍趋势、良率、散热、线性电路与摩尔定律的提出 |
+| 1970 | [大型共享数据库的关系模型](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | Codd 1970 年经典论文全文中文翻译：提出关系模型、规范化形式、数据子语言，并讨论关系运算、冗余与一致性 |
+| 1970 | [虚拟内存](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory/) | Denning 1970 年经典综述《Virtual Memory》全文，逐节还原虚拟存储器的动机、机制、策略、局部性原理与工作集理论 |
+| 1974 | [SEQUEL：一种结构化的英语查询语言](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel/) | SEQUEL 原始论文全文中文翻译：以 SELECT-FROM-WHERE 块、映射、GROUP BY 与集合运算取代谓词演算中的量词和绑定变量，是 SQL 的直接前身 |
+| 1974 | [UNIX 分时系统的设计与实现](https://chirpyli.github.io/cs-paper-reading/papers/zh/unix-time-sharing-system/) | Ritchie 与 Thompson 1974 年 UNIX 论文全文中文翻译：文件系统、i-node、Shell、进程、管道、fork/exec、重定向、过滤器、陷阱、系统统计与设计哲学 |
+| 1976 | [System R：面向数据库管理的关系方法](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r/) | System R 原始论文全文中文翻译：RDS/RSS 两层架构、SEQUEL 接口、基于代价的优化器、事务与并发控制、检查点恢复，以及 RDI/RSI 操作符与语法附录 |
+| 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks/) | Lamport 奠基性论文：用“先于发生”关系定义分布式系统中的偏序，用逻辑时钟扩展为全序，并给出物理时钟同步算法与偏差上界 |
+| 2014 | [Raft：寻找一种易于理解的共识算法](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft/) | Raft 通过强领导者、随机选举超时与联合共识，把 Paxos 难以理解的共识问题分解为可独立理解的Leader选举、日志复制与安全性 |
+| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake/) | Snowflake 提出多集群共享数据架构，为云端数据仓库提供弹性、半结构化数据支持、时间旅行与端到端安全 |
+| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora/) | Aurora 将 redo 日志处理下推到多租户横向扩展存储服务，把云数据库的核心瓶颈从计算与存储转移到网络 |
+| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates/) | Socrates 将 SQL Server 分解为计算、日志、页面与对象存储层，实现云数据库的弹性扩展与高可用 |
+| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute/) | DSec 通过四类沙箱后端、集群级放置与生命周期管理、版本化层组合和 3FS 按需镜像加载，支撑大规模智能体训练 |
+| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase/) | Databricks 提出 Lakebase：第三代事务数据库架构，把全部存储外置到云对象存储并采用开放 PostgreSQL 页格式，实现存算分离、零拷贝分支与 Lakehouse 统一分析 |
+| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability/) | 提出可逆效应与响应式协效应，将效应与协效应上下文统一为上下文范式，在 Cordis 中实现运行时组件的时空可组合性 |
 <!-- PAPERS END -->
 
 ## 目录结构
@@ -108,19 +103,19 @@ https://chirpyli.github.io/cs-paper-reading/
    venue: "Conference / Journal"
    paperUrl: "/papers/my-paper.pdf"
    paperUrlZh: "/papers/zh/my-paper/index.html"
-   description: "一句话摘要，会显示在首页"
+   description: "一句话摘要，会显示在首页和 README 推荐原因列"
+   reason: "推荐原因（可选，未填写时使用 description）"
    lang: zh
    tags: [database, systems]
    topic: systems
    difficulty: intermediate
    featured: false
-   rating: 4      # 1-5 星，控制 README 论文列表中的推荐程度
    draft: false   # true 时不会生成页面，适合写作中
    ---
    ```
 
 `slug` 决定页面 URL，因此文件以后需要改名时，只要保持 `slug` 不变，链接就不会失效。
-`rating` 取值 1–5，会显示为 README 论文列表中的推荐星级。
+README 论文列表的“推荐原因”列优先取 frontmatter 的 `reason`，未填写时使用 `description`。`slug` 以 `-notes` 结尾的学习笔记不会出现在该列表中，但仍会在站点首页展示。
 
 3. 提交并推送：
 

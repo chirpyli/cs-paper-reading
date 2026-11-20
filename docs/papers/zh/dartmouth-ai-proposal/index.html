@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="1955 年达特茅斯人工智能提案全文中文翻译：人工智能研究纲领、自动计算机、语言、神经网络、计算复杂性、自我改进、抽象、随机性与创造性，以及四位发起人的研究计划">
+  <title>关于举办达特茅斯人工智能夏季研究项目的提案 · CS Paper Reading</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="../../../assets/mathjax/tex-svg.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../../">cs-paper-reading</a>
+      <nav aria-label="主导航">
+        <a href="../../../#papers">论文笔记</a>
+        <a href="../../../#repos">相关仓库</a>
+        <a href="../../../#about">关于</a>
+        <a class="header-github" href="https://github.com/chirpyli/cs-paper-reading" target="_blank" rel="noopener noreferrer" aria-label="cs-paper-reading on GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap paper-page">
+    <article class="paper">
+      <header class="paper-header">
+        <p class="eyebrow">classic / medium</p>
+        <h1>关于举办达特茅斯人工智能夏季研究项目的提案</h1>
+        <p class="paper-original">A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence</p>
+        <p class="paper-authors">John McCarthy · Marvin L. Minsky · Nathaniel Rochester · Claude E. Shannon</p>
+        <p class="paper-venue">1955 · Dartmouth College</p>
+        <div class="paper-tags">          <span class="tag">artificial-intelligence</span>
+          <span class="tag">dartmouth</span>
+          <span class="tag">history</span>
+          <span class="tag">cybernetics</span>
+          <span class="tag">translation</span></div>
+        <p class="paper-links"><a href="../../../papers/McCarthy_et_al_1955_Dartmouth_AI_Proposal.pdf">原文 PDF ↗</a></p>
+      </header>
+
+      <details class="paper-toc">
+        <summary>目录</summary>
+        <div class="toc">
+<ul>
+<li><a href="#_2">研究提案</a><ul>
+<li><a href="#1">1. 自动计算机</a></li>
+<li><a href="#2">2. 如何编程使计算机使用语言</a></li>
+<li><a href="#3">3. 神经元网络</a></li>
+<li><a href="#4">4. 计算规模理论</a></li>
+<li><a href="#5">5. 自我改进</a></li>
+<li><a href="#6">6. 抽象</a></li>
+<li><a href="#7">7. 随机性与创造性</a></li>
+</ul>
+</li>
+<li><a href="#_3">项目发起人</a></li>
+<li><a href="#_4">经费申请</a></li>
+<li><a href="#1_1">1. 信息论概念在计算机器与脑模型中的应用</a></li>
+<li><a href="#2_1">2. 匹配环境—脑模型的自动机方法</a></li>
+<li><a href="#_5">机器表现中的原创性</a></li>
+<li><a href="#_6">发明或发现的过程</a></li>
+<li><a href="#_7">具有随机性的机器</a></li>
+</ul>
+</div>
+
+      </details>
+
+      <div class="paper-body">
+<h1 id="_1">关于举办达特茅斯人工智能夏季研究项目的提案</h1>
+<p><strong>J. McCarthy</strong>，达特茅斯学院<br />
+<strong>M. L. Minsky</strong>，哈佛大学<br />
+<strong>N. Rochester</strong>，IBM 公司<br />
+<strong>C. E. Shannon</strong>，贝尔电话实验室  </p>
+<p><strong>1955 年 8 月 31 日</strong></p>
+<blockquote>
+<p><strong>译者说明</strong>：这份文件不是期刊论文，而是向洛克菲勒基金会提交的研究项目提案；原文于 1955 年 8 月 31 日写成，通常被视为“人工智能”（Artificial Intelligence）一词首次公开使用及 AI 作为独立研究领域的起点之一。本文依据 Stanford 保存的提案全文译出，包括研究纲领、经费预算、四位发起人的个人研究计划以及“对人工智能问题感兴趣的人员”名单。原文网页版中的 1996 年编者注按原样保留。</p>
+</blockquote>
+<h2 id="_2">研究提案</h2>
+<p>我们提议，1956 年夏天在新罕布什尔州汉诺威的达特茅斯学院，开展一项为期两个月、由十人参与的人工智能研究。该研究基于这样一个猜想：学习的每一个方面，或智能的任何其它特征，原则上都可以被精确描述，从而可以制造机器来模拟它。我们将尝试寻找如何使机器使用语言、形成抽象和概念、解决目前保留给人类的问题，并改进自身。我们认为，如果一组经过精心挑选的科学家共同用一个夏天研究这些问题，其中一个或多个问题就可能取得重大进展。</p>
+<p>以下是人工智能问题的若干方面：</p>
+<h3 id="1">1. 自动计算机</h3>
+<p>如果一台机器能做某项工作，那么自动计算机就可以被编程来模拟这台机器。现有计算机的速度和存储容量可能不足以模拟人脑的许多高级功能，但主要障碍并不是机器容量不足，而是我们无法编写程序来充分利用已有能力。</p>
+<h3 id="2">2. 如何编程使计算机使用语言</h3>
+<p>可以推测，人类思维的很大一部分，是按照推理规则和猜想规则来操作词语。从这个观点看，形成一个概括，就是引入一个新词以及一些规则，使含有该词的句子能够蕴含其它句子，也被其它句子蕴含。这个想法从未被非常精确地表述过，也尚未给出具体例子。</p>
+<h3 id="3">3. 神经元网络</h3>
+<p>如何安排一组（假想的）神经元以形成概念？Uttley、Rashevsky 及其小组、Farley 与 Clark、Pitts 与 McCulloch、Minsky、Rochester 与 Holland 等人，已经对这一问题做了相当多的理论和实验工作。已经取得部分结果，但这一问题仍需要更多理论研究。</p>
+<h3 id="4">4. 计算规模理论</h3>
+<p>若给定一个定义明确的问题（即可以用机械方法检验某个提议答案是否有效的那种问题），一种解决方式是按顺序尝试所有可能答案。这种方法效率低下；要排除它，必须有某种计算效率标准。稍加思考可知，要得到计算效率的度量，必须掌握度量计算设备复杂性的方法，而这又要求有函数复杂性理论。Shannon 和 McCarthy 已在这一问题上取得若干部分结果。</p>
+<h3 id="5">5. <mark>自我改进</mark></h3>
+<p><mark>一台真正智能的机器，很可能会执行可最好描述为自我改进的活动</mark>。已经有人提出一些实现方案，值得进一步研究。似乎也可能对这一问题进行抽象研究。</p>
+<h3 id="6">6. 抽象</h3>
+<p>可以明确区分若干种“抽象”类型，另有若干种则不太明确。直接尝试对这些类型分类，并描述机器从感觉和其它数据形成抽象的方法，似乎很有价值。</p>
+<h3 id="7">7. 随机性与创造性</h3>
+<p>一个相当有吸引力但明显不完整的猜想是：创造性思维与缺乏想象力但胜任的思维之间的差别，在于注入了某种随机性。这种随机性必须由直觉引导才有效率。换言之，有根据的猜测或预感，是在原本有序的思维中包含受控随机性。</p>
+<p>除以上共同提出的研究问题外，我们还要求参与者描述自己将从事的工作。四位项目发起人的陈述附后。</p>
+<p>我们建议按如下方式组织小组工作：</p>
+<p>将把本提案副本发给潜在参与者，询问他们是否愿意在小组中研究人工智能问题；如果愿意，还询问他们希望研究什么。邀请将由组织委员会根据对每个人对小组工作潜在贡献的估计发出。成员们将在小组工作期开始前的数月内传阅自己以前的工作和对所研究问题的想法。</p>
+<p>会议期间将举行常规研究讨论会，并为成员提供个人工作和非正式小组工作的机会。</p>
+<h2 id="_3">项目发起人</h2>
+<ol>
+<li><strong>C. E. Shannon</strong>，贝尔电话实验室数学家。Shannon 发展了信息统计理论、命题演算在开关电路中的应用，并在开关电路的高效综合、学习机器设计、密码学和图灵机理论方面有成果。他与 J. McCarthy 正在共同编辑一部关于“自动机理论”的《数学年鉴研究》。</li>
+<li><strong>M. L. Minsky</strong>，哈佛大学数学与神经学初级研究员。Minsky 制造过一台通过神经网络模拟学习的机器，并撰写了数学博士论文《神经网络与脑模型问题》，其中包含学习理论和随机神经网络理论成果。</li>
+<li><strong>N. Rochester</strong>，IBM 公司纽约州波基普西信息研究经理。Rochester 曾从事七年雷达开发和七年计算机器开发。他与另一位工程师共同负责 IBM 701 型的设计，这是当时广泛使用的大型自动计算机。他提出了一些如今广泛使用的自动编程技术，并一直关注如何让机器完成以前只能由人完成的任务。他还从事神经网络模拟，尤其强调用计算机检验神经生理学理论。</li>
+<li><strong>J. McCarthy</strong>，达特茅斯学院数学助理教授。McCarthy 研究过与思维过程数学性质有关的若干问题，包括图灵机理论、计算机速度、脑模型与环境的关系以及机器使用语言。这些工作的部分结果将收入 Shannon 与 McCarthy 编辑的即将出版的《年鉴研究》。McCarthy 的其它工作属于微分方程领域。</li>
+</ol>
+<h2 id="_4">经费申请</h2>
+<p>我们请求洛克菲勒基金会基于以下条目为项目提供经费支持：</p>
+<ol>
+<li>为每位未由本单位支持的教师级参与者提供 1,200 美元薪水。例如，来自贝尔实验室和 IBM 公司的参与者由这些机构支持，而来自达特茅斯和哈佛的参与者则需要基金会支持。</li>
+<li>为最多两名研究生提供每人 700 美元薪水。</li>
+<li>为远道而来的参与者提供铁路旅费。</li>
+<li>为同时在别处租房的人提供房租。</li>
+<li>秘书费用 650 美元，其中秘书 500 美元、复印费用 150 美元。</li>
+<li>组织费用 200 美元，包括复制参与者初步工作的费用，以及组织所需旅费。</li>
+<li>两三人短期来访费用。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: right;">金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6 份 1,200 美元薪水</td>
+<td style="text-align: right;">7,200 美元</td>
+</tr>
+<tr>
+<td>2 份 700 美元薪水</td>
+<td style="text-align: right;">1,400 美元</td>
+</tr>
+<tr>
+<td>8 人差旅与房租，平均 300 美元</td>
+<td style="text-align: right;">2,400 美元</td>
+</tr>
+<tr>
+<td>秘书与组织费用</td>
+<td style="text-align: right;">850 美元</td>
+</tr>
+<tr>
+<td>额外差旅费用</td>
+<td style="text-align: right;">600 美元</td>
+</tr>
+<tr>
+<td>预备金</td>
+<td style="text-align: right;">550 美元</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td style="text-align: right;"><strong>13,500 美元</strong></td>
+</tr>
+</tbody>
+</table>
+<h1 id="c-e-shannon">C. E. Shannon 的研究计划</h1>
+<p>我想把研究投入以下一个或两个主题。虽然我希望这样做，但由于个人原因，我可能无法整个两个月都出席；不过我打算在可能的时间内到场。</p>
+<h2 id="1_1">1. 信息论概念在计算机器与脑模型中的应用</h2>
+<p><mark>信息论的一个基本问题，是在有噪声信道上可靠传输信息</mark>。计算机器中的一个类似问题，是使用不可靠元件进行可靠计算。von Neumann 曾对谢弗竖线元件研究过这一问题，Shannon 和 Moore 曾对继电器研究过；但仍有许多开放问题。多元件情形、类似信道容量的概念发展、所需冗余上下界的更锐利分析等，都是重要问题。</p>
+<p>另一个问题涉及信息网络理论，其中信息在多个闭合回路中流动，与通信理论中通常考虑的简单单向信道不同。在闭合回路情形下，延迟问题变得非常重要，似乎需要一种全新方法。这可能涉及诸如“部分熵”这样的概念：当一个消息系综的过去历史只有一部分已知时，如何描述其不确定性。</p>
+<h2 id="2_1">2. 匹配环境—脑模型的自动机方法</h2>
+<p>一般来说，机器或动物只能适应或运行于有限类别的环境。即使是复杂的人脑，也首先适应环境中较简单的方面，再逐步建立对更复杂特征的适应。我建议通过并行发展一系列匹配的（理论）环境和相应适应这些环境的脑模型，来研究脑模型的综合。这里的重点是澄清环境模型，并把它表示为数学结构。</p>
+<p>在讨论机械化智能时，我们常想到机器执行最先进的人类思维活动——证明定理、作曲或下棋。我在这里建议从简单之处开始：环境既不敌对（只是无关紧要）也不复杂，然后沿一系列容易的阶段向这些高级活动推进。</p>
+<p>设计一种表现出如下学习类型的机器并不困难。给机器提供输入和输出通道，以及一种内部手段，使其对输入产生多种输出响应，从而可以通过“试错”过程“训练”机器获得一系列输入输出函数中的一种。把这种机器置于适当环境中，并给出“成功”或“失败”标准，它就能被训练表现出“目标导向”行为。除非机器具备或能够发展一种抽象感觉材料的方法，否则它只能以极其缓慢的步骤在复杂环境中前进，一般不会达到高级行为水平。</p>
+<p>现在让成功标准不仅是机器输出通道上出现某种期望活动模式，而是在给定环境中完成某种给定操作。于是，在某些方面，运动情境表现为感觉情境的对偶；只有当机器同样能够组装一组“运动抽象”，把自身输出活动与环境变化联系起来时，进展才可能相当快。这类“运动抽象”只有在它们与机器能够作为感觉情境变化检测到的环境变化相关时才有价值，也就是说，必须通过环境结构同机器正在使用的感觉抽象相关联。</p>
+<p>我研究这类系统已有一段时间，并感到如果能够设计出一种机器，使其在形成感觉抽象和运动抽象时满足某些关系，就可能产生高级行为。这些关系涉及把运动抽象与感觉抽象配对，从而产生新的感觉情境，表示如果相应运动行为真的发生，可以预期的环境变化。</p>
+<p>所寻求的重要结果是：<mark>机器将倾向于在自身内部建立其所处环境的抽象模型</mark>。如果给它一个问题，它可以先在这个内部环境抽象模型中探索解决方案，然后再尝试外部实验。由于这种初步内部研究，这些外部实验会显得相当聪明，行为也不得不被认为是相当“有想象力的”。</p>
+<p>我的论文中描述了一个非常初步的关于如何实现这一点的建议，我打算继续朝这个方向工作。我希望到 1956 年夏天，能拥有这样一台机器的模型，并相当接近可在计算机上编程的阶段。</p>
+<h1 id="m-l-minsky">M. L. Minsky 的研究计划</h1>
+<p>我打算投入更多时间研究图灵机理论。尤其是，我认为通过研究比通常考虑的更复杂的机器——例如具有多个磁头、二维磁带或某种随机元件的机器——可以学到很多东西。我希望研究这些机器与通常单磁头、一维、确定性图灵机之间的关系。</p>
+<p>我还打算研究神经网络的一些理论问题。我相信，如果对神经网络施加某些限制，就可以证明关于其计算能力的定理。特别有意思的是网络在学习和自组织过程中的行为。网络理论中许多问题仍未被精确表述；我希望至少澄清其中一部分。</p>
+<p>我也将继续从事一台学习机的实验工作，这台机器通过神经网络模拟学习。希望这些实验能为更一般的理论问题提供线索，并且反过来，理论工作能指导实验。</p>
+<h1 id="n-rochester">N. Rochester 的研究计划</h1>
+<h2 id="_5">机器表现中的原创性</h2>
+<p>在为自动计算机器编写程序时，人们通常给机器提供一组规则，以覆盖机器可能遇到并面对的每一种偶然情况。人们期望机器盲目遵守这组规则，不表现出原创性或常识。此外，当机器因为人们给它的规则略有矛盾而困惑时，人们只会恼怒自己。最后，在为机器编程时，人们有时不得不以非常费力的方式处理问题；而如果机器只有一点直觉，或者能做合理猜测，问题的解决就可能相当直接。本文描述一个猜想，说明如何在上述一般领域中使机器表现得更复杂一些。本文讨论的是我断断续续研究约五年、并希望明年夏天在人工智能项目中继续深入的问题。</p>
+<h2 id="_6">发明或发现的过程</h2>
+<p>生活在我们文化环境中的经验，为我们提供了解决许多问题的程序。这些程序究竟如何运作尚不清楚，但我将用 Craik 提出的模型讨论这个问题的这一方面。他认为，心理活动基本上是在大脑中构造小型引擎，这些引擎能够模拟并因此预测与环境有关的抽象。因此，解决一个已经理解的问题，其过程如下：</p>
+<p>环境提供数据，由这些数据形成某些抽象；这些抽象连同某些内部习惯或驱力，提供：</p>
+<ol>
+<li>以未来要实现的目标状态来定义问题，即一个目标；</li>
+<li>解决问题的建议行动；</li>
+<li>激活大脑中对应这一情境的引擎的刺激。</li>
+</ol>
+<p>随后，该引擎运行，预测这种环境情境和所提议反应将导致什么。如果预测与目标相符，个体就按所示行动。</p>
+<p>如果个体所处文化环境已经为此问题提供了解决方案，预测就会与目标相符。把个体视为存储程序计算机，其程序中含有覆盖这一特定偶然情形的规则。对更复杂情形，规则可能更复杂；规则可能要求测试一组可能行动中的每一个，以确定哪个提供解决方案。更复杂的一组规则甚至会考虑环境不确定性；例如下棋时，人们不仅要考虑自己的下一步，还要考虑环境即对手的各种可能走法。</p>
+<p>现在考虑一个文化中没有人掌握解决方案、且长期未能解决的问题。这可能是当前典型的未解科学问题。个体可能尝试解决它，却发现每个合理行动都导致失败。换言之，存储程序中虽然含有解决这个问题的规则，但规则略有错误。</p>
+<p>为解决这一问题，个体必须做某些按照文化积累智慧看来不合理或出乎意料的事。他可以通过随机尝试不同事物来获得这种行为，但这种方法通常效率太低。可能的行动路线通常太多，而可接受者只是极小一部分。个体需要一种预感，某种出乎意料但不完全不合理的事情。有些问题，往往是较新且未经历太多努力的问题，只需要一点随机性；另一些往往长期未解的问题，则需要真正背离传统方法的奇异偏差。一个需要原创性才能解决的问题，可能通过包含随机性的方法得以解决。</p>
+<p>用 Craik 的模型来说，本应模拟环境的引擎一开始未能正确模拟。因此，必须尝试对该引擎作各种修改，直到找到一个使它完成所需功能的修改。</p>
+<p>如果不从文化中的个体来描述问题，也可以从不成熟个体的学习来描述。当个体遇到超出其经验范围的问题时，必须以类似方式克服它。</p>
+<p>到目前为止，用这种方法在机器解决问题方面最接近实际的做法，是蒙特卡洛方法的扩展。在通常适合蒙特卡洛的问题中，存在一种被严重误解的情形，其中可能因素太多，以致人们无法在求解析解时决定哪些因素可以忽略。因此数学家让机器做几千次随机实验。这些实验结果为答案可能是什么提供粗略猜测。蒙特卡洛方法的扩展，是把这些结果作为指导，确定应忽略什么，以便把问题充分简化，获得近似解析解。</p>
+<p>可能有人会问，为什么方法必须包含随机性。为什么不按当前知识预测成功概率的顺序尝试每种可能性？对于身处文化环境中的科学家，或许单个科学家一生都不太可能解决问题，因此需要多人努力。如果他们使用随机性，就能同时研究，而不必完全重复工作；如果使用系统方法，则需要难以实现的详细通信。对于在与其他个体竞争中成熟的个体，混合策略（用博弈论术语）要求随机性。对于机器，随机性很可能需要用来克服程序员的短视和偏见。虽然随机性的必要性显然尚未被证明，但有大量证据支持它。</p>
+<h2 id="_7">具有随机性的机器</h2>
+<p>为了使自动计算机器表现出原创性，仅仅引入随机性而不使用远见是不够的。例如，若编写程序使计算机每 10,000 步产生一个随机数并把它作为指令执行，结果可能是一片混乱。经过一段混乱后，机器很可能尝试某种禁止操作或执行停机指令，实验即告结束。</p>
+<p>不过，有两种途径似乎是合理的。其一是发现大脑如何做到这一点，然后模仿它。其二是取某类需要原创性的真实问题，尝试找到一种方法，编写程序让自动计算机器解决它们。两种途径最终很可能都成功；但不清楚哪一种更快，也不知道需要多少年或几代人。我到目前为止的大部分努力放在前一种途径上，因为我觉得在处理这样困难的问题前，最好掌握所有相关科学知识，而且我已经相当了解计算机现状和编程技术。</p>
+<p>大脑的控制机制显然与当今计算机的控制机制非常不同。这种差异的一个表征是失败方式。计算机失败通常会产出完全不合理的东西。存储器或数据传输中的错误，出现在最高有效位和最低有效位的可能性一样大。控制错误几乎可以造成任何后果：它可能执行错误指令，或操作错误输入输出设备。另一方面，人类言语错误往往产生几乎有意义的陈述（想想一个几乎睡着、微醉或轻微发烧的人）。也许大脑的机制是：推理中的轻微错误会以恰当方式引入随机性；也许控制行为顺序的机制会引导随机因素，从而提高想象过程相对于纯随机的效率。</p>
+<p>我们已在自动计算机上做了一些模拟神经网络的工作。一个目的，是看这样是否能以适当方式引入随机性。结果似乎表明，神经元活动与问题解决之间的联系未知因素太多，这种方法目前还无法奏效。这些结果对网络和神经元行为投下一些光，但尚未给出解决需要原创性问题的方法。</p>
+<p>这项工作的一个重要方面，是努力让机器形成并操作概念、抽象、概括和名称。我们尝试检验一种关于大脑如何做到这一点的理论。第一组实验导致理论若干细节的修正；第二组实验正在进行。到明年夏天，这项工作将完成，并写出最终报告。</p>
+<p>我下一步的计划，是尝试编写一个程序来解决某类有限问题中需要原创性的那些问题。现在还太早，无法预测明年夏天我会处于什么阶段，也无法确定那时如何定义眼前的问题。然而，本文描述的底层问题，正是我打算继续追求的。用一句话说，这个问题就是：我怎样才能制造一台在解决问题时表现出原创性的机器？</p>
+<p><strong>注释</strong></p>
+<ol>
+<li>K. J. W. Craik, <em>The Nature of Explanation</em>, Cambridge University Press, 1943（1952 重印），第 92 页。</li>
+<li>K. S. Lashley, “The Problem of Serial Order in Behavior”, in <em>Cerebral Mechanism in Behavior</em>, the Hixon Symposium, ed. L. A. Jeffress, John Wiley &amp; Sons, New York, pp. 112–146, 1951.</li>
+<li>D. O. Hebb, <em>The Organization of Behavior</em>, John Wiley &amp; Sons, New York, 1949.</li>
+</ol>
+<h1 id="john-mccarthy">John McCarthy 的研究计划</h1>
+<p>明年以及人工智能夏季研究项目期间，我打算研究语言与智能的关系。显然，把试错方法直接应用于感觉数据与运动活动之间的关系，不会产生任何非常复杂的行为；更必要的是，把试错方法应用于更高抽象层。人心显然使用语言作为处理复杂现象的手段。高层的试错过程，常采取提出猜想并检验它们的形式。英语具有迄今为止描述的任何形式语言都缺少的若干性质：</p>
+<ol>
+<li>用英语论证并辅以非形式数学，可以很简洁；</li>
+<li>英语具有普遍性，因为它能在英语中建立任何其它语言，并在适当处使用该语言；</li>
+<li>英语使用者能在英语中指称自己，并表述自己在解决所研究问题方面的进展；</li>
+<li>除证明规则外，若英语被完整形式化，它还具有<strong>猜想规则</strong>。</li>
+</ol>
+<p>迄今为止表述的逻辑语言，要么是使计算机执行预先规定计算的指令表，要么是数学部分的形式化。后者构造的目标是：</p>
+<ol>
+<li>易于用非形式数学描述；</li>
+<li>允许把非形式数学中的陈述翻译到该语言；</li>
+<li>使关于证明是否成立（原文此处有缺漏）的论证变得容易。</li>
+</ol>
+<p>人们从未尝试使人工语言中的证明与非形式证明一样短。因此，似乎值得尝试构造一种人工语言，使计算机可被编程用它来处理需要猜想和自我引用的问题。它应对应于英语，即关于给定主题的简短英语陈述在这种语言中应有简短对应物，简短论证或猜想性论证也如此。我希望尝试构造一种具有这些性质，并包含物理对象、事件等概念的语言；希望使用这种语言，能够编程让机器学会玩好游戏并完成其它任务。</p>
+<h1 id="_8">对人工智能问题感兴趣的人员</h1>
+<p>这份名单的目的，是让名单上的人知道谁有兴趣接收有关该问题的文件。名单上的人将收到达特茅斯人工智能夏季项目报告的副本。<em>[1996 年编者注：实际上并没有这份报告。]</em></p>
+<p>名单包括参加或访问过达特茅斯人工智能夏季研究项目的人，或已知对该主题感兴趣的人。名单将被发送给名单上的人以及少数其他人。</p>
+<p>就目前目的而言，人工智能问题被理解为：使机器以某种方式行动，这种行动若由人做出，就会被称为智能。</p>
+<p>将很快发布修订名单，因此任何希望加入名单或更改地址的人，应写信给：<em>[原文此处未列出地址]</em></p>
+<p><em>1996 年编者注：并非所有这些人都来到了达特茅斯会议；他们只是我们认为可能对人工智能感兴趣的人。</em></p>
+<p>名单如下：</p>
+<pre><code class="language-text">Adelson, Marvin — Hughes Aircraft Company, Airport Station, Los Angeles, CA
+Ashby, W. R. — Barnwood House, Gloucester, England
+Backus, John — IBM Corporation, 590 Madison Avenue, New York, NY
+Bernstein, Alex — IBM Corporation, 590 Madison Avenue, New York, NY
+Bigelow, J. H. — Institute for Advanced Studies, Princeton, NJ
+Elias, Peter — R. L. E., MIT, Cambridge, MA
+Duda, W. L. — IBM Research Laboratory, Poughkeepsie, NY
+Davies, Paul M. — 1317 C. 18th Street, Los Angeles, CA
+Fano, R. M. — R. L. E., MIT, Cambridge, MA
+Farley, B. G. — 324 Park Avenue, Arlington, MA
+Galanter, E. H. — University of Pennsylvania, Philadelphia, PA
+Gelernter, Herbert — IBM Research, Poughkeepsie, NY
+Glashow, Harvey A. — 1102 Olivia Street, Ann Arbor, MI
+Goertzal, Herbert — 330 West 11th Street, New York, New York
+Hagelbarger, D. — Bell Telephone Laboratories, Murray Hill, NJ
+Miller, George A. — Memorial Hall, Harvard University, Cambridge, MA
+Harmon, Leon D. — Bell Telephone Laboratories, Murray Hill, NJ
+Holland, John H. — E. R. I., University of Michigan, Ann Arbor, MI
+Holt, Anatol — 7358 Rural Lane, Philadelphia, PA
+Kautz, William H. — Stanford Research Institute, Menlo Park, CA
+Luce, R. D. — 427 West 117th Street, New York, NY
+MacKay, Donald — Department of Physics, University of London, London, WC2, England
+McCarthy, John — Dartmouth College, Hanover, NH
+McCulloch, Warren S. — R. L. E., M.I.T., Cambridge, MA
+Melzak, Z. A. — Mathematics Department, University of Michigan, Ann Arbor, MI
+Minsky, M. L. — 112 Newbury Street, Boston, MA
+More, Trenchard — Department of Electrical Engineering, MIT, Cambridge, MA
+Nash, John — Institute for Advanced Studies, Princeton, NJ
+Newell, Allen — Department of Industrial Administration, Carnegie Institute of Technology, Pittsburgh, PA
+Robinson, Abraham — Department of Mathematics, University of Toronto, Toronto, Ontario, Canada
+Rochester, Nathaniel — Engineering Research Laboratory, IBM Corporation, Poughkeepsie, NY
+Rogers, Hartley, Jr. — Department of Mathematics, MIT, Cambridge, MA
+Rosenblith, Walter — R. L. E., M.I.T., Cambridge, MA
+Rothstein, Jerome — 21 East Bergen Place, Red Bank, NJ
+Sayre, David — IBM Corporation, 590 Madison Avenue, New York, NY
+Schorr-Kon, J. J. — C-380 Lincoln Laboratory, MIT, Lexington, MA
+Shapley, L. — Rand Corporation, 1700 Main Street, Santa Monica, CA
+Schutzenberger, M. P. — R. L. E., M.I.T., Cambridge, MA
+Selfridge, O. G. — Lincoln Laboratory, M.I.T., Lexington, MA
+Shannon, C. E. — R. L. E., M.I.T., Cambridge, MA
+Shapiro, Norman — Rand Corporation, 1700 Main Street, Santa Monica, CA
+Simon, Herbert A. — Department of Industrial Administration, Carnegie Institute of Technology, Pittsburgh, PA
+Solomonoff, Raymond J. — Technical Research Group, 17 Union Square West, New York, NY
+Steele, J. E., Capt. USAF — Area B., Box 8698, Wright-Patterson AFB, Ohio
+Webster, Frederick — 62 Coolidge Avenue, Cambridge, MA
+Moore, E. F. — Bell Telephone Laboratory, Murray Hill, NJ
+Kemeny, John G. — Dartmouth College, Hanover, NH
+</code></pre>
+<blockquote>
+<p><strong>版本说明</strong>：原文网页版末尾附有 1996 年 John McCarthy 的说明页，指出所附网页转录并非原始打字稿的精确排版，并说明“人工智能”一词在该提案中首次使用。译文已保留其中与正文理解相关的编者注。</p>
+</blockquote>
+      </div>
+    </article>
+
+    <p class="paper-back"><a href="../../../#papers">← 返回论文笔记列表</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 chirpyli</span>
+      <span>Built with GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>
