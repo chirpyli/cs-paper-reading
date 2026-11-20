@@ -17,20 +17,26 @@ https://chirpyli.github.io/cs-paper-reading/
 <!-- PAPERS START -->
 | 年份 | 论文 | 推荐程度 |
 | --- | --- | --- |
-| 1970 | [关系模型的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
-| 1974 | [SQL 的前身：SEQUEL 的诞生](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-1974/) | ★★★★★ |
-| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-1976/) | ★★★★★ |
-| 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-1978/) | ★★★★★ |
-| 1978 | [分布式系统中的时间、时钟与事件序列（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-study-notes/) | ★★★★☆ |
-| 2014 | [Raft：寻找一种易于理解的共识算法](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft-2014/) | ★★★★★ |
-| 2014 | [Raft 共识算法（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft-study-notes/) | ★★★★☆ |
-| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake-2016/) | ★★★★★ |
-| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-2017/) | ★★★★★ |
-| 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-analysis/) | ★★★☆☆ |
-| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates-2019/) | ★★★★☆ |
-| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute-2026/) | ★★★★☆ |
-| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase-2026/) | ★★★★★ |
-| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability-2026/) | ★★★★☆ |
+| 1936 | [论可计算数及其在判定问题中的应用（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers/) | ★★★★★ |
+| 1936 | [可计算数与通用机器：图灵 1936 年论文学习笔记](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers-notes/) | ★★★★★ |
+| 1970 | [大型共享数据库的关系模型（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
+| 1970 | [关系模型的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model-notes/) | ★★★★★ |
+| 1970 | [虚拟内存（论文原文全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory/) | ★★★★★ |
+| 1970 | [虚拟内存：地址空间的抽象与工作集理论](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory-notes/) | ★★★★★ |
+| 1974 | [SEQUEL：一种结构化的英语查询语言（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel/) | ★★★★★ |
+| 1974 | [SQL 的前身：SEQUEL 的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-notes/) | ★★★★★ |
+| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r/) | ★★★★★ |
+| 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks/) | ★★★★★ |
+| 1978 | [分布式系统中的时间、时钟与事件序列（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-notes/) | ★★★★☆ |
+| 2014 | [Raft：寻找一种易于理解的共识算法](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft/) | ★★★★★ |
+| 2014 | [Raft 共识算法（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft-notes/) | ★★★★☆ |
+| 2016 | [Snowflake 弹性数据仓库](https://chirpyli.github.io/cs-paper-reading/papers/zh/snowflake/) | ★★★★★ |
+| 2017 | [Amazon Aurora: 面向高吞吐云原生关系数据库的设计考量](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora/) | ★★★★★ |
+| 2017 | [Aurora 核心机制阅读札记](https://chirpyli.github.io/cs-paper-reading/papers/zh/aurora-notes/) | ★★★☆☆ |
+| 2019 | [Socrates: 云端新 SQL Server](https://chirpyli.github.io/cs-paper-reading/papers/zh/socrates/) | ★★★★☆ |
+| 2026 | [DeepSeek Elastic Compute (DSec)：面向大规模高效智能体训练的沙箱基础设施](https://chirpyli.github.io/cs-paper-reading/papers/zh/deepseek-elastic-compute/) | ★★★★☆ |
+| 2026 | [Lakebase：把 OLTP 重建为开放湖存储之上的弹性计算](https://chirpyli.github.io/cs-paper-reading/papers/zh/lakebase/) | ★★★★★ |
+| 2026 | [时空可组合性的编程范式](https://chirpyli.github.io/cs-paper-reading/papers/zh/spatiotemporal-composability/) | ★★★★☆ |
 <!-- PAPERS END -->
 
 ## 目录结构
@@ -83,17 +89,22 @@ https://chirpyli.github.io/cs-paper-reading/
 
 ## 日常发布：只需新增一篇 Markdown
 
-1. 在 `papers/zh/` 下新增文件，例如 `my-paper.md`。文件名即页面 URL 中的 `<slug>`。
+1. 在 `papers/zh/` 下新增文件。文件命名规则：
+   - 论文全文翻译：`YYYY-paper-slug.md`，例如 `2026-lakebase.md`；
+   - 个人学习笔记：`YYYY-paper-slug-notes.md`，例如 `2026-lakebase-notes.md`。
+   - `slug` 使用小写英文与连字符，不使用空格、中文或下划线；文件名年份应与 `year` 一致。
 2. 复制已有笔记的 frontmatter，按需修改：
 
    ```yaml
    ---
    title: "中文标题"
    paperTitle: "Paper Title"
+   slug: my-paper
    authors: ["Author A", "Author B"]
    year: 2026
    venue: "Conference / Journal"
    paperUrl: "/papers/my-paper.pdf"
+   paperUrlZh: "/papers/zh/my-paper/index.html"
    description: "一句话摘要，会显示在首页"
    lang: zh
    tags: [database, systems]
@@ -105,6 +116,7 @@ https://chirpyli.github.io/cs-paper-reading/
    ---
    ```
 
+`slug` 决定页面 URL，因此文件以后需要改名时，只要保持 `slug` 不变，链接就不会失效。
 `rating` 取值 1–5，会显示为 README 论文列表中的推荐星级。
 
 3. 提交并推送：
@@ -157,7 +169,7 @@ papers/
 │   └── lakebase/
 │       └── fig-1.png
 ├── zh/
-│   └── lakebase-2026.md
+│   └── 2026-lakebase.md
 └── en/
     └── lakebase-2026.md
 ```

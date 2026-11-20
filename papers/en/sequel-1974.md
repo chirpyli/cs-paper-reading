@@ -7,7 +7,7 @@ authors:
 year: 1974
 venue: "Proceedings of the 1974 ACM SIGFIDET Workshop"
 paperUrl: "/papers/2705-sequel-1974.pdf"
-paperUrlZh: "/papers/zh/sequel-1974/index.html"
+paperUrlZh: "/papers/zh/sequel/index.html"
 description: "Chamberlin and Boyce proposed the Structured English Query Language SEQUEL, replacing predicate calculus with SELECT-FROM-WHERE blocks — the direct ancestor of SQL"
 lang: en
 tags:

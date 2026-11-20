@@ -338,6 +338,8 @@ def update_readme(papers: list[dict]) -> None:
 
 
 def main() -> None:
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     (ROOT / "docs" / ".nojekyll").touch()
     copy_assets()
@@ -346,7 +348,9 @@ def main() -> None:
         meta, body = load_paper(path)
         if meta.get("draft"):
             continue
-        slug = path.stem
+        slug = str(meta.get("slug") or path.stem)
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
+            raise ValueError(f"{path}: invalid slug {slug!r}")
         page, _ = render(meta, body)
         target = OUTPUT_DIR / slug / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)

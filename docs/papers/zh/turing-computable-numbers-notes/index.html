@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="图灵 1936 年论文学习笔记：从纸带机器、描述数与通用机，到对角论证、停机类不可判定性、λ-可定义性与判定问题不可解">
+  <title>可计算数与通用机器：图灵 1936 年论文学习笔记 · CS Paper Reading</title>
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../../assets/style.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="../../../assets/mathjax/tex-svg.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../../">cs-paper-reading</a>
+      <nav aria-label="主导航">
+        <a href="../../../#papers">论文笔记</a>
+        <a href="../../../#repos">相关仓库</a>
+        <a href="../../../#about">关于</a>
+        <a class="header-github" href="https://github.com/chirpyli/cs-paper-reading" target="_blank" rel="noopener noreferrer" aria-label="cs-paper-reading on GitHub">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap paper-page">
+    <article class="paper">
+      <header class="paper-header">
+        <p class="eyebrow">theory-of-computation / advanced</p>
+        <h1>可计算数与通用机器：图灵 1936 年论文学习笔记</h1>
+        <p class="paper-original">On Computable Numbers, with an Application to the Entscheidungsproblem</p>
+        <p class="paper-authors">Alan M. Turing</p>
+        <p class="paper-venue">1936 · Proceedings of the London Mathematical Society</p>
+        <div class="paper-tags">          <span class="tag">computability</span>
+          <span class="tag">turing-machine</span>
+          <span class="tag">universal-machine</span>
+          <span class="tag">undecidability</span>
+          <span class="tag">entscheidungsproblem</span></div>
+        <p class="paper-links"><a href="../../../papers/Turing_1936_On_Computable_Numbers.pdf">原文 PDF ↗</a></p>
+      </header>
+
+      <details class="paper-toc">
+        <summary>目录</summary>
+        <div class="toc">
+<ul>
+<li><a href="#_1">核心思想</a></li>
+<li><a href="#_2">核心结论</a></li>
+<li><a href="#_3">意义</a></li>
+<li><a href="#_4">一句话总结</a></li>
+</ul>
+</div>
+
+      </details>
+
+      <div class="paper-body">
+<blockquote>
+<p>本篇是<a href="../turing-computable-numbers/">《论可计算数及其在判定问题中的应用》</a>的<strong>学习笔记版</strong>，学习总结论文中的思想。</p>
+</blockquote>
+<h2 id="_1">核心思想</h2>
+<p>图灵要回答的根本问题是：<strong>什么叫“用有限手段计算”</strong>。他把人的纸笔计算过程抽象为一台机器：有限个内部状态（m-构型）、一条划分为方格的无限纸带，以及只依赖当前状态与当前符号的有限规则。由此得到的图灵机模型，第一次让“算法”成为可以严格研究的对象。</p>
+<p>论文完成三个关键动作：</p>
+<ol>
+<li><strong>定义可计算</strong>：无循环机器持续输出二进制序列，由此定义可计算实数。</li>
+<li><strong>编码机器</strong>：机器规则表可化为标准描述 S.D. 与描述数 D.N.，于是“程序”成为可以写在纸带上的数据。</li>
+<li><strong>构造通用机器</strong>：存在机器 $U$，读取任意机器的描述并模拟其行为，这是现代通用计算机、解释器和虚拟机的理论原型。</li>
+</ol>
+<h2 id="_2">核心结论</h2>
+<ol>
+<li><strong>可计算数可枚举，但不能被有效枚举</strong>：能为机器编号，却无法有效筛出哪些机器是无循环的。</li>
+<li><strong>机器行为存在不可判定性</strong>：不存在一般过程判定任意机器是否无循环，也不存在一般过程判定机器是否会打印某个给定符号。这是后来所谓“停机问题不可判定”的核心形态。</li>
+<li><strong>对角论证不能滥用</strong>：Cantor 式对角构造不能证明可计算序列不可枚举，因为构造出的对角序列未必可计算。</li>
+<li><strong>判定问题不可解</strong>：为每台机器 $M$ 构造公式 $Un(M)$，使得 $Un(M)$ 可证当且仅当 $M$ 曾经打印 0。若可判定公式可证性，就能判定机器是否打印 0，矛盾。因此希尔伯特判定问题没有机械解。</li>
+<li><strong>机器模型与 $\lambda$-演算等价</strong>：图灵可计算序列恰好是 $\lambda$-可定义序列，为“丘奇–图灵论题”奠定基础。</li>
+</ol>
+<h2 id="_3">意义</h2>
+<ul>
+<li><strong>工程意义</strong>：程序即数据、通用机器模拟任意程序，是 CPU、解释器、虚拟机、编译器与操作系统运行机制的理论源头。</li>
+<li><strong>分析意义</strong>：不存在完美的静态分析、缺陷检测和程序验证器；工具必须依赖约束、近似或人工输入。</li>
+<li><strong>理论意义</strong>：可计算性、归约、不可判定性、图灵完备等概念由此展开，成为算法理论、程序语言与形式化方法的基础语言。</li>
+<li><strong>思想意义</strong>：论文把“什么能被机械地完成”变成严格的数学问题，并给出边界；它既奠定计算理论，也划定了自动化能力的极限。</li>
+</ul>
+<h2 id="_4">一句话总结</h2>
+<p><mark>程序可以被编码成数据，机器可以模拟任何机器，但并非所有关于程序的问题都能被自动回答。</mark></p>
+      </div>
+    </article>
+
+    <p class="paper-back"><a href="../../../#papers">← 返回论文笔记列表</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© 2026 chirpyli</span>
+      <span>Built with GitHub Pages</span>
+    </div>
+  </footer>
+</body>
+</html>

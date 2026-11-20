@@ -20,7 +20,7 @@ authors:
 year: 2026
 venue: "PVLDB, Vol. 19, No. 12, pp. 4385-4398"
 paperUrl: "https://www.vldb.org/pvldb/vol19/p4385-pandis.pdf"
-paperUrlZh: "/zh/papers/lakebase-2026/"
+paperUrlZh: "/zh/papers/lakebase/"
 description: "Databricks presents Lakebase, a third-generation transactional database that externalizes all storage to cloud object storage in open PostgreSQL page format, enabling zero-copy branching and unified Lakehouse analytics"
 lang: en
 tags:
