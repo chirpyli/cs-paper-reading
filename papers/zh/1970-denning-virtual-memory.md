@@ -1,5 +1,5 @@
 ---
-title: "虚拟内存（论文原文全文翻译）"
+title: "虚拟内存"
 slug: denning-virtual-memory
 paperTitle: "Virtual Memory"
 authors:
@@ -8,7 +8,7 @@ year: 1970
 venue: "ACM Computing Surveys"
 paperUrl: "/papers/Denning_1970_Virtual_Memory.pdf"
 paperUrlZh: "/papers/zh/denning-virtual-memory/index.html"
-description: "Denning 1970 年经典综述《Virtual Memory》全文中文翻译，逐节还原虚拟存储器的动机、机制、策略、局部性原理与工作集理论"
+description: "Denning 1970 年经典综述《Virtual Memory》全文，逐节还原虚拟存储器的动机、机制、策略、局部性原理与工作集理论"
 lang: zh
 tags:
   - virtual-memory

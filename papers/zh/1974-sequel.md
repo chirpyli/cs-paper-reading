@@ -1,5 +1,5 @@
 ---
-title: "SEQUEL：一种结构化的英语查询语言（全文翻译）"
+title: "SEQUEL：一种结构化的英语查询语言"
 slug: sequel
 paperTitle: "SEQUEL: A Structured English Query Language"
 authors:

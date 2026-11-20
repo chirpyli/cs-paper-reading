@@ -17,3 +17,4 @@
 - 同一论文的全文翻译是主文档，无需 `-translation` 后缀；补充解读统一使用 `-notes` 后缀。
 - 文件名年份应与 frontmatter 的 `year` 保持一致。
 - 每篇文章必须在 frontmatter 中显式写 `slug`，页面 URL 由 `slug` 决定，不再由文件名决定。
+- title命名中无需有`（全文翻译）`字样，默认文章为中文版或中文版翻译。

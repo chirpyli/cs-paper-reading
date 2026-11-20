@@ -17,15 +17,18 @@ https://chirpyli.github.io/cs-paper-reading/
 <!-- PAPERS START -->
 | 年份 | 论文 | 推荐程度 |
 | --- | --- | --- |
-| 1936 | [论可计算数及其在判定问题中的应用（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers/) | ★★★★★ |
+| 1936 | [论可计算数及其在判定问题中的应用](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers/) | ★★★★★ |
 | 1936 | [可计算数与通用机器：图灵 1936 年论文学习笔记](https://chirpyli.github.io/cs-paper-reading/papers/zh/turing-computable-numbers-notes/) | ★★★★★ |
-| 1970 | [大型共享数据库的关系模型（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
+| 1946 | [电子计算仪器逻辑设计的初步讨论](https://chirpyli.github.io/cs-paper-reading/papers/zh/ias-computer-logical-design/) | ★★★★★ |
+| 1946 | [IAS 计算机逻辑设计（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/ias-computer-logical-design-notes/) | ★★★★★ |
+| 1970 | [大型共享数据库的关系模型](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model/) | ★★★★★ |
 | 1970 | [关系模型的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/codd-relational-model-notes/) | ★★★★★ |
-| 1970 | [虚拟内存（论文原文全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory/) | ★★★★★ |
+| 1970 | [虚拟内存](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory/) | ★★★★★ |
 | 1970 | [虚拟内存：地址空间的抽象与工作集理论](https://chirpyli.github.io/cs-paper-reading/papers/zh/denning-virtual-memory-notes/) | ★★★★★ |
-| 1974 | [SEQUEL：一种结构化的英语查询语言（全文翻译）](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel/) | ★★★★★ |
+| 1974 | [SEQUEL：一种结构化的英语查询语言](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel/) | ★★★★★ |
 | 1974 | [SQL 的前身：SEQUEL 的诞生（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/sequel-notes/) | ★★★★★ |
-| 1976 | [System R：关系数据库管理的里程碑](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r/) | ★★★★★ |
+| 1976 | [System R：面向数据库管理的关系方法](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r/) | ★★★★★ |
+| 1976 | [System R：关系数据库管理的里程碑（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/system-r-notes/) | ★★★★★ |
 | 1978 | [分布式系统中的时间、时钟与事件排序](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks/) | ★★★★★ |
 | 1978 | [分布式系统中的时间、时钟与事件序列（学习笔记）](https://chirpyli.github.io/cs-paper-reading/papers/zh/lamport-clocks-notes/) | ★★★★☆ |
 | 2014 | [Raft：寻找一种易于理解的共识算法](https://chirpyli.github.io/cs-paper-reading/papers/zh/raft/) | ★★★★★ |

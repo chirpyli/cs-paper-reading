@@ -1,5 +1,5 @@
 ---
-title: "论可计算数及其在判定问题中的应用（全文翻译）"
+title: "论可计算数及其在判定问题中的应用"
 slug: turing-computable-numbers
 paperTitle: "On Computable Numbers, with an Application to the Entscheidungsproblem"
 authors:
@@ -8,7 +8,7 @@ year: 1936
 venue: "Proceedings of the London Mathematical Society, s2-42(1): 230–265"
 paperUrl: "/papers/Turing_1936_On_Computable_Numbers.pdf"
 paperUrlZh: "/papers/zh/turing-computable-numbers/index.html"
-description: "图灵 1936 年奠基性论文全文中文翻译：自动机、可计算序列、通用机、对角论证、判定问题不可解性，并附论文修正与注释"
+description: "图灵 1936 年奠基性论文全文：自动机、可计算序列、通用机、对角论证、判定问题不可解性，并附论文修正与注释"
 lang: zh
 tags:
   - computability
@@ -1121,5 +1121,3 @@ $$[[N_{s_1},N_{s_2},\ldots,N_{s_{m-1}}],[N_t,N_{s_m}],[N_{s_{m+1}},\ldots,N_{s_n
 [23] [网络版编者注] 参见 S. C. Kleene 与 J. B. Rosser, *The Inconsistency of Certain Formal Logics*, *Annals of Mathematics*, Vol. 36, No. 3 (Jul., 1935), pp. 630–636；以及 A. M. Turing, *Systems of logic based on ordinals*, *Proc. Lond. Math. Soc.*, series 2, vol. 45 (1939), pp. 161–228。
 
 [24] [网络版编者注] S. C. Kleene, *A Theory of Positive Integers in Formal Logic. Part I*, *American Journal of Mathematics*, Vol. 57, No. 1 (Jan., 1935), pp. 153–173。
-
-> **版本说明**：原文最初由 London Mathematical Society 发表于 *Proceedings of the London Mathematical Society*, Series 2, Vol. 42 (1936–37), pp. 230–265；修正发表于同刊 Series 2, Vol. 43 (1937), pp. 544–546。本译文以公开扫描版为 PDF 底本，并参考了 abelard.org 的全文转录；网络版编者注已明确标注。

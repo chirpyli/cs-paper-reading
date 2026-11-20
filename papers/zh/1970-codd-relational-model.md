@@ -1,5 +1,5 @@
 ---
-title: "大型共享数据库的关系模型（全文翻译）"
+title: "大型共享数据库的关系模型"
 slug: codd-relational-model
 paperTitle: "A Relational Model of Data for Large Shared Data Banks"
 authors:
